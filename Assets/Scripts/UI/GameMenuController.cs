@@ -19,7 +19,7 @@ public class GameMenuController : MonoBehaviour
     public Transform menu;
     private float offscreenPosY = -2500f;
 
-    public List<Image> menuImages;
+    public List<Transform> menuImages;
     private bool isMenuDisplayed = false;
     private int currMenuscreen = 0;
     private int prevMenuscreen = 0;
