@@ -75,12 +75,13 @@ public class PlayerController : MonoBehaviour
     private void UpdateAction() {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            bool successful = false;
             if(!m_HasPicked) {
-                m_Picker.PickItem();
+                successful = m_Picker.PickItem();
             } else {
-                m_Picker.DropItem();
+                successful = m_Picker.DropItem();
             }
-            m_HasPicked = !m_HasPicked;
+            m_HasPicked = (successful)? !m_HasPicked : m_HasPicked;
         }
     }
 

@@ -6,45 +6,51 @@ using DG.Tweening;
 
 public class PlayerPicker : MonoBehaviour
 {
+    [Header("Reference")]
     [SerializeField] private PlayerStats m_Stats = null;
-    [SerializeField] private PlayerPickFinder m_PickFinder = null;
+    [SerializeField] private PlayerItemFinder m_ItemFinder = null;
     [SerializeField] private Transform m_PickedItemParent = null;
     [SerializeField] private Animator m_Anim = null;
     private Transform m_PickedItem = null;
+
+    [Header("Settings")]
+    [Space(10)]
+    [SerializeField] private float m_PlaceDistance = 1f;
     
-    public void PickItem() {
-        Transform item = m_PickFinder.GetItem();
-        if(!item)  return;
+    public bool PickItem() {
+        Transform item = m_ItemFinder.m_ItemInFront;
+        if(!item)  return false;
 
         m_Anim.SetTrigger("Pickup");
-        Rigidbody itemRigidBody = item.GetComponent<Rigidbody>();
-        if(itemRigidBody) {
-            item.GetComponent<Rigidbody>().isKinematic = true;
-            item.GetComponentInChildren<Collider>().enabled = false;
-        }
-        else {
-            Debug.LogError(">>>> pick item does not have rigidbody!");
-        }    
+        item.GetComponentInChildren<Collider>().enabled = false;
         item.parent = m_PickedItemParent;
         item.DOLocalMove(Vector3.zero, 0.3f);
         item.DOLocalRotate(Vector3.zero, 0.3f);
         m_PickedItem = item;
+        m_ItemFinder.m_ItemInFront = null;
+        return true;
     }
 
-    public void DropItem() {
-        if(m_PickedItem == null) return;
+    public bool DropItem() {
+        if(m_PickedItem == null) return false;
+        if(!CheckCanDrop()) return false;
 
         m_Anim.SetTrigger("Dropdown");
-        Rigidbody itemRigidBody = m_PickedItem.GetComponent<Rigidbody>();
-        if(itemRigidBody) {
-            m_PickedItem.GetComponent<Rigidbody>().isKinematic = false; 
-            m_PickedItem.GetComponent<Rigidbody>().AddForce(transform.forward * m_Stats.m_ThrowPower);
-            m_PickedItem.GetComponentInChildren<Collider>().enabled = true;
-            m_PickedItem.parent = null;
-            m_PickFinder.RemoveItemFromPicker(m_PickedItem);
-        }
-        else {
-            Debug.LogError(">>>> drop item does not have rigidbody!");
+        m_PickedItem.parent = null;
+        Vector3 landPos = transform.position + transform.forward * m_PlaceDistance;
+        landPos.y = 1;
+        Sequence seq = DOTween.Sequence();
+        seq.Append(m_PickedItem.DOMove(landPos, 0.5f));
+        seq.AppendCallback(()=>{m_PickedItem.GetComponentInChildren<Collider>().enabled = true;});
+        return true;
+    }
+
+    private bool CheckCanDrop() {
+        if(m_ItemFinder.m_ItemInFront == null)  {
+            return true;
+        } else {
+            // check if in front is placeable
+            return false;
         }
     }
 }

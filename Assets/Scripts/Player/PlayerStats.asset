@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   m_MovePower: 10000
-  m_MaxSpeed: 4
+  m_MaxSpeed: 2
   m_RotateSpeed: 8
   m_ThrowPower: 800
