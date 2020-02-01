@@ -10,9 +10,9 @@ public class Entity : MonoBehaviour, IPlaceable
     public ItemActionState currItemActionState = ItemActionState.None;
 
     // References to the Meshes
-    [SerializeField] private GameObject meshUnfired;
-    [SerializeField] private GameObject meshFixed;
-    [SerializeField] private GameObject meshBroken;
+    [SerializeField] private GameObject meshUnfired = null;
+    [SerializeField] private GameObject meshFixed = null;
+    [SerializeField] private GameObject meshBroken = null;
 
     #region IPlaceable
     public float GetPlaceHeight()
