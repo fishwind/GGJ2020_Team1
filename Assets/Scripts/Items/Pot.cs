@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pot : Entity
+public class Pot : Entity, IFireable
 {
-    // Variables to tweak
     public float repairTime;
-
-    // Define Enums
-    public Animator animator;
     private Coroutine repairCoroutine;
 
     #region Public Methods
@@ -28,28 +24,6 @@ public class Pot : Entity
         currItemActionState = ItemActionState.Pickup;
         // TODO: Animations, Play Sounds
 
-    }
-    #endregion
-
-    #region Private Methods
-    // Broken >> Cleared
-    void RepairPot()
-    {
-        // Stop Coroutine if currently in Progress
-        if (repairCoroutine != null)
-        {
-            StopCoroutine(repairCoroutine);
-            repairCoroutine = null;
-        }
-
-        if (currItemState == ItemStates.Broken)
-        {
-            currItemState = ItemStates.Cleared;
-            currItemActionState = ItemActionState.None;
-
-            // TODO: Destroy the Object, Clean up, Animations, Play Sounds
-            Destroy(gameObject);
-        }
     }
     #endregion
 
@@ -79,7 +53,7 @@ public class Pot : Entity
     public override void StartRepairing()
     {
         // Stop Coroutine if currently in Progress
-        if (repairCoroutine == null)
+        if (repairCoroutine == null && currItemState == ItemStates.Broken)
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
     }
 
@@ -91,10 +65,31 @@ public class Pot : Entity
             StopCoroutine(repairCoroutine);
     }
 
+    // Broken >> Cleared
+    public override void CompleteRepairing()
+    {
+        // Stop Coroutine if currently in Progress
+        if (repairCoroutine != null)
+        {
+            StopCoroutine(repairCoroutine);
+            repairCoroutine = null;
+        }
+
+        if (currItemState == ItemStates.Broken)
+        {
+            currItemState = ItemStates.Cleared;
+            currItemActionState = ItemActionState.None;
+
+            // TODO: Destroy the Object, Clean up, Animations, Play Sounds
+            Destroy(gameObject);
+        }
+    }
+
+
     IEnumerator RepairingingCoroutine()
     {
         yield return new WaitForSeconds(repairTime);
-        RepairPot();
+        CompleteRepairing();
     }
     #endregion
 
@@ -105,24 +100,20 @@ public class Pot : Entity
     }
     #endregion
 
-    #region Old Unused Code
-    /*
-    void PlayerInteract()
+    #region IFireable
+    public void CompleteFiring()
     {
-        switch (currItemState) {
-            case PotStates.Unfired:
-                break;
-            case PotStates.Fixed:
-                break;
-            case PotStates.Broken:
-                RepairPot();
-                break;
-            case PotStates.Cleared:
-                break;
-            default:
-                Debug.LogError("Pot either has no valid States / missing Behavior");
-                break;
+        if (currItemState == ItemStates.Unfired)
+        {
+            currItemState = ItemStates.Fixed;
+            currItemActionState = ItemActionState.Pickup;
+            // TODO: Animations, Play Sounds
         }
-    }*/
+    }
+
+    public bool CheckIfFireable()
+    {
+        return (currItemState == ItemStates.Unfired);
+    }
     #endregion
 }
