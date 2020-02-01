@@ -24,7 +24,7 @@ public class Table : Entity, IBreakable, IRepairable
     void Break()
     {
         currItemState = ItemStates.Broken;
-        currItemActionState = ItemActionState.Repair;
+        currItemActionState = ItemActionState.RepairHit;
 
         UpdateItemMesh();
 

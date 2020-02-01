@@ -65,6 +65,7 @@ public class PotteryWheel : MonoBehaviour
     private IEnumerator CraftingCoroutine()
     {
         m_BurnTimer = m_Stats.m_FurnaceRepairTime;
+        transform.DOShakeRotation(m_Stats.m_FurnaceRepairTime);
         yield return new WaitForSeconds(m_Stats.m_FurnaceRepairTime);
         CraftDoneFeedback();
     }

@@ -44,7 +44,7 @@ public class Pot : Entity, IFireable, IBreakable, IRepairable
     void Break()
     {
         currItemState = ItemStates.Broken;
-        currItemActionState = ItemActionState.Repair;
+        currItemActionState = ItemActionState.RepairSweep;
 
         UpdateItemMesh();
 
