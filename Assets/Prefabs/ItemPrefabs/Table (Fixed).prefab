@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bdc5c78dc9dfb49818a116d41041b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemTier: 0
   itemPlaceHeight: 1
   currItemState: 2
   currItemActionState: 0
   meshUnfired: {fileID: 2440498856471244405}
   meshFixed: {fileID: 4140776283745725369}
   meshBroken: {fileID: 679839680126317685}
+  m_BurnParticles: {fileID: 359707904201448608}
+  timer: 1
   repairTime: 2
 --- !u!1001 &1031061075846970199
 PrefabInstance:
@@ -275,6 +278,12 @@ GameObject:
 --- !u!4 &6040402640876468640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5466217707935361550, guid: 213c702d288fab241b893771654a02e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1731698075487572910}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &359707904201448608 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2086796478901767950, guid: 213c702d288fab241b893771654a02e3,
     type: 3}
   m_PrefabInstance: {fileID: 1731698075487572910}
   m_PrefabAsset: {fileID: 0}

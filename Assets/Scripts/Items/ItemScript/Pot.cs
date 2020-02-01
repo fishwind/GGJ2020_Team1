@@ -47,8 +47,8 @@ public class Pot : Entity, IFireable, IBreakable, IRepairable
         currItemActionState = ItemActionState.RepairSweep;
 
         UpdateItemMesh();
-
         // TODO: Animations, Play Sounds
+        BreakFeedback();
     }
 
     void Repair()

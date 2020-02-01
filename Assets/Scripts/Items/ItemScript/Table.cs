@@ -29,6 +29,7 @@ public class Table : Entity, IBreakable, IRepairable
         UpdateItemMesh();
 
         // TODO: Animations, Play Sounds
+        BreakFeedback();
     }
 
     void Repair()

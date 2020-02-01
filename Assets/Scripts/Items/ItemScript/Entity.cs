@@ -16,6 +16,31 @@ public class Entity : MonoBehaviour, IPlaceable
     [SerializeField] private GameObject meshFixed = null;
     [SerializeField] private GameObject meshBroken = null;
 
+    public ParticleSystem m_BurnParticles = null;
+    public float timer = 1f;
+    private float currTimer = 0f;
+
+    public void BreakFeedback()
+    {
+        currTimer = timer;
+    }
+
+    public void Update()
+    {
+        currTimer -= Time.deltaTime;
+
+        if (m_BurnParticles &&
+            m_BurnParticles.isPlaying && currTimer <= 0)
+        {
+            m_BurnParticles.Stop();
+        }
+        else if (m_BurnParticles &&
+                 !m_BurnParticles.isPlaying && currTimer > 0)
+        {
+            m_BurnParticles.Play();
+        }
+    }
+
     #region IPlaceable
     public float GetPlaceHeight()
     {
