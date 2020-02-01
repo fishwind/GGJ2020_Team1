@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IPlaceable
 {
-    float getPlaceHeight();
+    // Used by the Player to Determine the Height of the 3D Model to place it
+    float GetPlaceHeight();
 }

@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
+public class Pot : Entity, IFireable
 {
-    // Variables to tweak
-    public float itemPlaceHeight;
+    [Header("Item Variables")]
     public float repairTime;
-    public ItemStates currItemState = ItemStates.Fixed;
-    public ItemActionState currItemActionState = ItemActionState.None;
-
-    // Define Enums
-    public Animator animator;
-
     private Coroutine repairCoroutine;
 
     #region Public Methods
@@ -36,38 +29,47 @@ public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
     #endregion
 
     #region Private Methods
-    // Broken >> Cleared
-    void RepairPot()
+    void Break()
     {
-        // Stop Coroutine if currently in Progress
-        if (repairCoroutine != null)
-        {
-            StopCoroutine(repairCoroutine);
-            repairCoroutine = null;
-        }
+        currItemState = ItemStates.Broken;
+        currItemActionState = ItemActionState.Repair;
 
-        if (currItemState == ItemStates.Broken)
-        {
-            currItemState = ItemStates.Cleared;
-            currItemActionState = ItemActionState.None;
+        UpdateItemMesh();
 
-            // TODO: Destroy the Object, Clean up, Animations, Play Sounds
-            Destroy(gameObject);
-        }
+        // TODO: Animations, Play Sounds
     }
+
+    void Repair()
+    {
+        currItemState = ItemStates.Cleared;
+        currItemActionState = ItemActionState.None;
+
+        UpdateItemMesh();
+
+        // TODO: Destroy the Object, Clean up, Animations, Play Sounds
+        Destroy(gameObject);
+    }
+
+    void Fired()
+    {
+        currItemState = ItemStates.Fixed;
+        currItemActionState = ItemActionState.Pickup;
+
+        UpdateItemMesh();
+
+        // TODO: Animations, Play Sounds
+    }
+
     #endregion
 
     #region IBreakable
     // Used by the "Hero"
-    public void AttemptBreak()
+    public override void AttemptBreak()
     {
         // Only Break if Already Fixed
         if (currItemState == ItemStates.Fixed)
         {
-            currItemState = ItemStates.Broken;
-            currItemActionState = ItemActionState.Repair;
-            // TODO: Animations, Play Sounds
-
+            Break();
         }
         else
         {
@@ -80,53 +82,64 @@ public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
 
     #region IRepairable
     // Used By Player to start Repairing Item
-    public void StartRepairing()
+    public override void StartRepairing()
     {
         // Stop Coroutine if currently in Progress
-        if (repairCoroutine == null)
+        if (repairCoroutine == null && currItemState == ItemStates.Broken)
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
     }
 
     // Used By Player to stop Repairing Item in the middle of repairing
-    public void StopRepairing()
+    public override void StopRepairing()
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine != null)
             StopCoroutine(repairCoroutine);
     }
 
+    // Broken >> Cleared
+    public override void CompleteRepairing()
+    {
+        // Stop Coroutine if currently in Progress
+        if (repairCoroutine != null)
+        {
+            StopCoroutine(repairCoroutine);
+            repairCoroutine = null;
+        }
+
+        if (currItemState == ItemStates.Broken)
+        {
+            Repair();
+        }
+    }
+
+
     IEnumerator RepairingingCoroutine()
     {
         yield return new WaitForSeconds(repairTime);
-        RepairPot();
+        CompleteRepairing();
     }
     #endregion
 
     #region IPlaceable
-    public float getPlaceHeight()
+    public override float GetPlaceHeight()
     {
         return itemPlaceHeight;
     }
     #endregion
 
-    #region Old Unused Code
-    /*
-    void PlayerInteract()
+    #region IFireable
+    public void CompleteFiring()
     {
-        switch (currItemState) {
-            case PotStates.Unfired:
-                break;
-            case PotStates.Fixed:
-                break;
-            case PotStates.Broken:
-                RepairPot();
-                break;
-            case PotStates.Cleared:
-                break;
-            default:
-                Debug.LogError("Pot either has no valid States / missing Behavior");
-                break;
+        if (currItemState == ItemStates.Unfired)
+        {
+            Fired();
         }
-    }*/
+    }
+
+    public bool CheckIfFireable()
+    {
+        return (currItemState == ItemStates.Unfired);
+    }
     #endregion
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IBreakable
 {
+    // Used by the "Hero" who tries to break stuff
     void AttemptBreak();
 }
 
