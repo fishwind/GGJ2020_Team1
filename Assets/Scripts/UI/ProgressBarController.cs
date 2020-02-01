@@ -14,6 +14,7 @@ public enum ProgressState
 
 public class ProgressBarController : MonoBehaviour
 {
+    public int progressionTier = 1;
     public float tweenDuration = 0.3f;
 
     [Header("Background")]
@@ -99,6 +100,7 @@ public class ProgressBarController : MonoBehaviour
 
             terrainController.scrollingTerrain = false;
             eventController.ResetEvent();
+            progressionTier++;
         }
 
         HandleFlip();

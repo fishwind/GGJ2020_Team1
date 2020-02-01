@@ -78,6 +78,7 @@ public class Pot : Entity, IFireable, IBreakable, IRepairable
     public void AttemptBreak(int itemTier)
     {
         // TODO: Check if Hero Lvl Strng Enuff to break
+        if (!CANIBREAK(itemTier)) return;
 
         // Only Break if Already Fixed
         if (currItemState == ItemStates.Fixed)

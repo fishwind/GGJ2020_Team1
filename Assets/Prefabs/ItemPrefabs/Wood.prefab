@@ -18,7 +18,7 @@ MonoBehaviour:
   meshUnfired: {fileID: 0}
   meshFixed: {fileID: 7353775202464201726}
   meshBroken: {fileID: 0}
-  currCraftMatType: 0
+  currCraftMatType: 1
 --- !u!1001 &4149749246949214163
 PrefabInstance:
   m_ObjectHideFlags: 0

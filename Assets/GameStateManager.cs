@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UI;
+
 public enum GameState
 {
     INIT,
@@ -15,6 +15,7 @@ public enum GameState
     //ANNOUNCEMENT_FAIL,
     ANNOUNCEMENT_GAMEOVER
 }
+
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance;
@@ -32,6 +33,7 @@ public class GameStateManager : MonoBehaviour
     public GameObject m_WhiteText;
 
     public AnimationCurve m_TextAppearCurve;
+
     void Awake()
     {
         if (GameStateManager.Instance != null)
@@ -182,7 +184,6 @@ public class GameStateManager : MonoBehaviour
             m_BText.text = "Our great hero approaches!";
             m_WText.text = "Our great hero approaches!";
             ChangeScale(m_TextAppearCurve.Evaluate(m_HeroAnnouncementDuration - m_CurrStateDuration));
-
         }
         else if (m_GameState == GameState.ANNOUNCEMENT_REPAIR)
         {

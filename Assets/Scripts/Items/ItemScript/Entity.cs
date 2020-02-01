@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour, IPlaceable
 {
+    public int itemTier;
+
     [Header("Debug Stuff")]
     public float itemPlaceHeight;
     public ItemStates currItemState = ItemStates.Fixed;
@@ -19,14 +21,22 @@ public class Entity : MonoBehaviour, IPlaceable
     {
         return itemPlaceHeight;
     }
+
+    public bool CANIBREAK(int itemTier) { return this.itemTier > itemTier; }
+
     #endregion
 
     #region Mesh Methods
     protected void UpdateItemMesh()
     {
-        meshUnfired.SetActive(currItemState == ItemStates.Unfired);
-        meshFixed.SetActive(currItemState == ItemStates.Fixed);
-        meshBroken.SetActive(currItemState == ItemStates.Broken);
+        if (meshUnfired)
+            meshUnfired.SetActive(currItemState == ItemStates.Unfired);
+
+        if (meshFixed)
+            meshFixed.SetActive(currItemState == ItemStates.Fixed);
+
+        if (meshBroken)
+            meshBroken.SetActive(currItemState == ItemStates.Broken);
     }
 
     public void SetMeshColliders(bool isActive)
