@@ -9,7 +9,9 @@ public class InGameHero : MonoBehaviour
     public GameObject m_InHousePoint;
     public GameObject m_LeavePoint;
 
-    public float m_SpeedMultiplier = 3.0f;
+    public float m_AccelMultiplier = 5.0f;
+    public float m_MaxSpeed = 7f;
+    public float m_SlowdownDistanceThreshold = 1f;
 
     private int m_InGameHeroState = 0;
 
@@ -19,11 +21,26 @@ public class InGameHero : MonoBehaviour
     void OnEnable()
     {
         //subscribe to the event which tells the hero to moves in.
+        GlobalEvents.OnPlayerApproachHouse += HandlePlayerApproachHouse;
     }
 
     void OnDisable()
     {
         //unsubscribe to the event which tells the hero to moves in.
+        GlobalEvents.OnPlayerApproachHouse += HandlePlayerApproachHouse;
+    }
+
+    void HandlePlayerApproachHouse()
+    {
+        if(m_InGameHeroState == 0)
+        {
+            foreach(Renderer r in m_Renderers)
+            {
+                r.enabled = true;
+            }
+
+            m_InGameHeroState = 1;
+        }
     }
 
     void Start()
@@ -70,7 +87,7 @@ public class InGameHero : MonoBehaviour
 
     void Update_NotActive()
     {
-        //for now instantly enter the house
+        //for now instantly enter the house - COMMENT oUT LATER
         foreach(Renderer r in m_Renderers)
         {
             r.enabled = true;
@@ -86,20 +103,36 @@ public class InGameHero : MonoBehaviour
 
         if(reached)
         {
+            GlobalEvents.SendPlayerStartDestroyDoor();
             m_StateDuration = 3.0f; //this should be animation time
             m_InGameHeroState = 2;
         }
     }
 
+    float m_MovementSpeed = 0;
     bool MoveTowards(Vector3 position)
     {
-        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, position, Time.deltaTime * m_SpeedMultiplier);
-        Vector3 forward = position - gameObject.transform.position;
-        forward.y = 0;
-        forward = forward.normalized;
-        gameObject.transform.rotation = Quaternion.LookRotation(forward);
+        float dist = (gameObject.transform.position - position).magnitude;
 
-        return (gameObject.transform.position - position).magnitude < (Time.deltaTime * 2);
+        if(dist < m_SlowdownDistanceThreshold)
+        {
+            m_MovementSpeed = Mathf.Lerp(m_MovementSpeed, 0.1f, Time.deltaTime * m_AccelMultiplier);
+        }
+        else
+        {
+            m_MovementSpeed = Mathf.Lerp(m_MovementSpeed, m_MaxSpeed, Time.deltaTime * m_AccelMultiplier);
+        }
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, position, Time.deltaTime * m_MovementSpeed);
+        Vector3 forward = position - gameObject.transform.position;
+        if(forward.magnitude > 0.1f)
+        {
+            forward.y = 0;
+            forward = forward.normalized;
+            gameObject.transform.rotation = Quaternion.LookRotation(forward);
+        }
+
+
+        return dist < (Time.deltaTime * 2);
     }
 
 
@@ -108,6 +141,7 @@ public class InGameHero : MonoBehaviour
         m_StateDuration -= Time.deltaTime;
         if(m_StateDuration <= 0)
         {
+            GlobalEvents.SendPlayerDestroyedDoor();
             m_InGameHeroState = 3;
         }
     }
@@ -132,6 +166,7 @@ public class InGameHero : MonoBehaviour
 
         if(m_StateDuration <= 0)
         {
+            GlobalEvents.SendPlayerStartDestroyAll(1); //value from gamestatemanager
             m_StateDuration = 3.0f;
             m_InGameHeroState = 5;
         }
@@ -141,13 +176,22 @@ public class InGameHero : MonoBehaviour
     {
         m_StateDuration -= Time.deltaTime;
         //look back
-        gameObject.transform.rotation = Quaternion.LookRotation(Vector3.back);
+        RotateToward(Vector3.back);
 
         if(m_StateDuration <= 0)
         {
+            GlobalEvents.SendPlayerDestroyedAll(1);
             m_StateDuration = 3.0f;
             m_InGameHeroState = 6;
         }
+    }
+    float m_RotateSpeed = 5;
+
+    void RotateToward(Vector3 dir)
+    {
+        Vector3 newForward = Vector3.RotateTowards(gameObject.transform.forward, dir, Time.deltaTime * m_RotateSpeed,Time.deltaTime * m_RotateSpeed);
+        newForward.y = 0;
+        gameObject.transform.rotation = Quaternion.LookRotation(newForward);
     }
 
     void Update_Leave()
@@ -156,6 +200,7 @@ public class InGameHero : MonoBehaviour
 
         if(reached)
         {
+            GlobalEvents.SendPlayerLeaveComplete(1);
             m_StateDuration = 3.0f; //this should be animation time
             m_InGameHeroState = 0;
         }
