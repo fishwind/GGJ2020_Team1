@@ -18,6 +18,13 @@ public class PotteryWheel : MonoBehaviour
     private AudioSource m_Asource = null;
 
     public GameObject prefabPotUnfired;
+    public GameObject prefabCrate;
+
+    [Header("Material counter")]
+    public int requiredClay = 1;
+    public int clayCount = 0;
+    public int requiredWood = 1;
+    public int woodCount = 0;
 
     private void Start()
     {
@@ -46,31 +53,84 @@ public class PotteryWheel : MonoBehaviour
         if (!craftMat || craftMat.currItemState != ItemStates.CraftMat)
         {
             Entity someEntity = col.gameObject.GetComponentInParent<Entity>();
-            if(someEntity != null)
+            if (someEntity != null)
                 RejectObject(someEntity.gameObject);
-        } else {
+        }
+        else
+        {
             // Check if CraftMat Match
             if (craftMat.currCraftMatType == CraftMatType.Clay)
             {
-                StartCoroutine(CraftingCoroutine());
+                clayCount++;
+
+                if (ReadyToCraft(CraftMatType.Clay))
+                    StartCoroutine(CraftingCoroutine(CraftMatType.Clay));
+
+                Feedback();
                 Destroy(craftMat.gameObject);
-            } else {
+            }
+            else if (craftMat.currCraftMatType == CraftMatType.Wood)
+            {
+                woodCount++;
+
+                if (ReadyToCraft(CraftMatType.Wood))
+                    StartCoroutine(CraftingCoroutine(CraftMatType.Wood));
+
+                Feedback();
+                Destroy(craftMat.gameObject);
+            }
+            else
+            {
                 RejectObject(craftMat.gameObject);
             }
         }
 
-        
     }
 
-    private IEnumerator CraftingCoroutine()
+
+    private bool ReadyToCraft(CraftMatType type)
+    {
+        switch (type)
+        {
+            case CraftMatType.Clay:
+                return clayCount >= requiredClay;
+
+            case CraftMatType.Wood:
+                return woodCount >= requiredWood;
+
+            default:
+                return false;
+        }
+    }
+
+    private IEnumerator CraftingCoroutine(CraftMatType type)
     {
         m_BurnTimer = m_Stats.m_FurnaceRepairTime;
-        transform.DOShakeRotation(m_Stats.m_FurnaceRepairTime);
+
+        // Reset after craft
+        if (type == CraftMatType.Clay) clayCount = 0;
+        if (type == CraftMatType.Wood) woodCount = 0;
+
+        Feedback();
         yield return new WaitForSeconds(m_Stats.m_FurnaceRepairTime);
-        CraftDoneFeedback();
+        CraftDoneFeedback(type);
     }
 
-    private void CraftDoneFeedback()
+    private void Feedback()
+    {
+        transform.DOShakeRotation(m_Stats.m_FurnaceRepairTime);
+    }
+
+    private void CraftDoneFeedback(CraftMatType type)
+    {
+        if (type == CraftMatType.Clay)
+            CreatePot();
+
+        if (type == CraftMatType.Wood)
+            CreateCrate();
+    }
+
+    private void CreatePot()
     {
         // Instantiate Pot
         GameObject unfiredPot = Instantiate(prefabPotUnfired, transform.position, transform.rotation);
@@ -78,6 +138,18 @@ public class PotteryWheel : MonoBehaviour
         unfiredPot.GetComponent<Entity>().SetMeshColliders(false);
 
         ShootOutObject(unfiredPot);
+
+        m_Asource.PlayOneShot(m_PotDoneClip);
+    }
+
+    private void CreateCrate()
+    {
+        // Instantiate Pot
+        GameObject crateObj = Instantiate(prefabCrate, transform.position, transform.rotation);
+        // Off Collider #IMPT to avoid infinte loop
+        crateObj.GetComponent<Entity>().SetMeshColliders(false);
+
+        ShootOutObject(crateObj);
 
         m_Asource.PlayOneShot(m_PotDoneClip);
     }
