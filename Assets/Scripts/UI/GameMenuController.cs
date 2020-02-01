@@ -24,7 +24,7 @@ public class GameMenuController : MonoBehaviour
     private int currMenuscreen = 0;
     private int prevMenuscreen = 0;
 
-    private float inputCD = 0.5f;
+    public float inputCD = 0.5f;
     private float currInput;
 
     private void ShowMenu(bool isShow)

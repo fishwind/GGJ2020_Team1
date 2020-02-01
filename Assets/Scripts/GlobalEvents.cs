@@ -5,6 +5,7 @@ using UnityEngine;
 public delegate void GenericEvent();
 public delegate void GenericIntEvent(int val);
 public delegate void GenericBoolEvent(bool val);
+public delegate void GenericFloatEvent(float val);
 
 //this class has all the communication events. All features should use this to talk to each other and not directly access.
 
@@ -50,5 +51,29 @@ public static class GlobalEvents
     public static void SendMenuOpened(bool isMenuOpen)
     {
         OnMenuOpened?.Invoke(isMenuOpen);
+    }
+
+    public static GenericFloatEvent OnRepairGameplayStart;
+    public static void SendRepairGameplayStart(float duration)
+    {
+        OnRepairGameplayStart?.Invoke(duration);
+    }
+
+    public static GenericFloatEvent OnRepairReturnDuration;
+    public static void SendRepairReturnDuration(float duration)
+    {
+        OnRepairReturnDuration?.Invoke(duration);
+    }
+
+    public static GenericEvent OnHeroQuestComplete;
+    public static void SendHeroQuestComplete()
+    {
+        OnHeroQuestComplete?.Invoke();
+    }
+
+    public static GenericEvent OnHeroReturningToHouse;
+    public static void SendHeroReturningToHouse()
+    {
+        OnHeroReturningToHouse?.Invoke();
     }
 }
