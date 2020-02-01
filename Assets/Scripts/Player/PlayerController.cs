@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private PlayerStats m_Stats = null;
     [SerializeField] private PlayerPicker m_Picker = null;
+    [SerializeField] private PlayerItemFinder m_ItemFinder = null;
     [SerializeField] private Animator m_Anim = null;
     private Camera m_Cam = null;
     private Rigidbody m_Rbody = null;
@@ -75,13 +76,31 @@ public class PlayerController : MonoBehaviour
     private void UpdateAction() {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(!m_HasPicked) {
-                m_Picker.PickItem();
-            } else {
-                m_Picker.DropItem();
+            Transform item = m_ItemFinder.m_ItemInFront;
+            if(!item) return;
+
+            Entity entity = item.GetComponent<Entity>();
+            ItemActionState actionState = entity.ItemActionState;
+            switch(actionState) {
+                case 1: this.PickDropAction(); break;
+                case 2: entity.Sweep(); break;
+                default: return;
             }
-            m_HasPicked = !m_HasPicked;
+            
         }
     }
 
+    private void PickDropAction() {
+        bool successful = false;
+        if(!m_HasPicked)
+            successful = m_Picker.PickItem();
+        else 
+            successful = m_Picker.DropItem();
+
+        m_HasPicked = (successful)? !m_HasPicked : m_HasPicked;
+    }
+
+    private void Sweep() {
+
+    }
 }
