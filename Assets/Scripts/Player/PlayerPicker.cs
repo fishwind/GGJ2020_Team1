@@ -63,7 +63,6 @@ public class PlayerPicker : MonoBehaviour
         ) {
             return true;
         } else {
-            // todo: play cannot drop sound
             m_Asource.PlayOneShot(m_CannotDropClip);
             Debug.Log(">>>> cannot drop");
             return false;
