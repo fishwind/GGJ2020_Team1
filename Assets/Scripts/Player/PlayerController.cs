@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip m_HoldActiveDoneClip = null;
     [SerializeField] private AudioClip m_HittingClip = null;
     [SerializeField] private AudioClip m_SweepingClip = null;
+    [SerializeField] private Slider m_ProgressSlider = null;
+    
 
     public bool m_CanMove = true;
     private Camera m_Cam = null;
@@ -29,7 +33,7 @@ public class PlayerController : MonoBehaviour
     // Player private
     private bool m_HasPicked = false;
 
-    private void OnEnabled() {
+    private void OnEnable() {
         GlobalEvents.OnMenuOpened += EnablePlayerMovement;
     }
 
@@ -173,6 +177,7 @@ public class PlayerController : MonoBehaviour
         repairable.CompleteRepairing();
         m_Asource.Stop();
         m_HoldingActiveAction = false;
+        m_ProgressSlider.gameObject.SetActive(false);
         Debug.Log(">>>>>>>>> completed holding action");
     }
 
@@ -185,14 +190,25 @@ public class PlayerController : MonoBehaviour
         m_Asource.Stop();
         m_RepairToBeStopped = null;
         m_HoldingActiveAction = false;
+        m_ProgressSlider.gameObject.SetActive(false);
         Debug.Log(">>>>>>>>> stopped holding action");
     }
 
     private IEnumerator HoldingActive(IRepairable repairable, ItemActionState state) {
+        m_ProgressSlider.gameObject.SetActive(true);
+        m_ProgressSlider.transform.localPosition = new Vector3(transform.position.x, m_ProgressSlider.transform.position.y, transform.position.z);
+        m_ProgressSlider.transform.rotation = Quaternion.LookRotation(Camera.main.transform.position - transform.position, Vector3.up);
+        m_ProgressSlider.value = 0;
+        m_ProgressSlider.maxValue = 3;
         if(state == ItemActionState.RepairHit)  m_Asource.clip = m_HittingClip;
         if(state == ItemActionState.RepairSweep)  m_Asource.clip = m_SweepingClip;
         m_Asource.Play();
-        yield return new WaitForSeconds(3f);
+        float counter = 0;
+        while(counter < 3) {
+            counter += Time.deltaTime;
+            m_ProgressSlider.value = counter;
+            yield return new WaitForEndOfFrame();
+        }
         CompleteActiveHoldingAction(repairable);
     }
 }
