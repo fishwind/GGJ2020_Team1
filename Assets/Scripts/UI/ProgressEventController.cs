@@ -11,6 +11,7 @@ public class ProgressEventController : MonoBehaviour
     public List<Sprite> eventSprites;
 
     private Transform heroObj;
+    private Animator heroAnim;
 
     public int numSpawned;
     private int currCounter;
@@ -47,6 +48,8 @@ public class ProgressEventController : MonoBehaviour
     public void SpawnRandomEvents(Transform hero)
     {
         heroObj = hero;
+        heroAnim = hero.GetComponentInChildren<Animator>();
+
         float x = heroObj.transform.localPosition.x;
         float maxX = 450;
         numSpawned = Random.Range(3, eventObjs.Count);
@@ -78,7 +81,7 @@ public class ProgressEventController : MonoBehaviour
         if (heroObj != null)
         {
             if (prevCounter >= 0 &&
-                heroObj.transform.position.x > eventObjs[prevCounter].position.x)
+                heroObj.transform.position.x >= eventObjs[prevCounter].position.x)
             {
                 ShowEvent();
             }
@@ -89,8 +92,27 @@ public class ProgressEventController : MonoBehaviour
     {
         int i = prevCounter;
         var pos = eventObjs[i].position;
-        eventObjs[i].DOLocalMoveY(offscreenPosY, tweenDuration);
+
+        eventObjs[i].DOScale(Vector3.one * 2, tweenDuration / 2).SetEase(tweenCurve)
+            .OnComplete(() => eventObjs[i].DOScale(Vector3.one, tweenDuration / 2));
+
+        eventObjs[i].DOLocalMoveY(onscreenPosY + 10, tweenDuration / 2)
+            .OnComplete(() => eventObjs[i].DOLocalMoveY(offscreenPosY, tweenDuration));
+
         CameraShake.Instance.Shake(0.1f, 0.1f);
+
+        heroAnim.SetBool("startAtk", true);
+
+        if (c != null)
+            StopCoroutine(c);
+        c = StartCoroutine(resetAnim());
+    }
+
+    Coroutine c;
+    IEnumerator resetAnim()
+    {
+        yield return new WaitForSeconds(1);
+        heroAnim.SetBool("startAtk", false);
     }
 
 }

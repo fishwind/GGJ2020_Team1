@@ -29,6 +29,7 @@ public class Table : Entity, IBreakable, IRepairable
         UpdateItemMesh();
 
         // TODO: Animations, Play Sounds
+        BreakFeedback();
     }
 
     void Repair()
@@ -87,6 +88,7 @@ public class Table : Entity, IBreakable, IRepairable
     public void AttemptBreak(int itemTier)
     {
         // TODO: Check if Hero Lvl Strng Enuff to break
+        if (!CANIBREAK(itemTier)) return;
 
         // Only Break if Already Fixed
         if (currItemState == ItemStates.Fixed)
