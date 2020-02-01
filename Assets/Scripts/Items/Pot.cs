@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Pot : Entity, IFireable
 {
+    [Header("Item Variables")]
     public float repairTime;
     private Coroutine repairCoroutine;
 
@@ -27,6 +28,40 @@ public class Pot : Entity, IFireable
     }
     #endregion
 
+    #region Private Methods
+    void Break()
+    {
+        currItemState = ItemStates.Broken;
+        currItemActionState = ItemActionState.Repair;
+
+        UpdateItemMesh();
+
+        // TODO: Animations, Play Sounds
+    }
+
+    void Repair()
+    {
+        currItemState = ItemStates.Cleared;
+        currItemActionState = ItemActionState.None;
+
+        UpdateItemMesh();
+
+        // TODO: Destroy the Object, Clean up, Animations, Play Sounds
+        Destroy(gameObject);
+    }
+
+    void Fired()
+    {
+        currItemState = ItemStates.Fixed;
+        currItemActionState = ItemActionState.Pickup;
+
+        UpdateItemMesh();
+
+        // TODO: Animations, Play Sounds
+    }
+
+    #endregion
+
     #region IBreakable
     // Used by the "Hero"
     public override void AttemptBreak()
@@ -34,10 +69,7 @@ public class Pot : Entity, IFireable
         // Only Break if Already Fixed
         if (currItemState == ItemStates.Fixed)
         {
-            currItemState = ItemStates.Broken;
-            currItemActionState = ItemActionState.Repair;
-            // TODO: Animations, Play Sounds
-
+            Break();
         }
         else
         {
@@ -77,11 +109,7 @@ public class Pot : Entity, IFireable
 
         if (currItemState == ItemStates.Broken)
         {
-            currItemState = ItemStates.Cleared;
-            currItemActionState = ItemActionState.None;
-
-            // TODO: Destroy the Object, Clean up, Animations, Play Sounds
-            Destroy(gameObject);
+            Repair();
         }
     }
 
@@ -105,9 +133,7 @@ public class Pot : Entity, IFireable
     {
         if (currItemState == ItemStates.Unfired)
         {
-            currItemState = ItemStates.Fixed;
-            currItemActionState = ItemActionState.Pickup;
-            // TODO: Animations, Play Sounds
+            Fired();
         }
     }
 

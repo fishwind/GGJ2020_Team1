@@ -4,6 +4,7 @@ using UnityEngine;
 
 public delegate void GenericEvent();
 public delegate void GenericIntEvent(int val);
+public delegate void GenericBoolEvent(bool val);
 
 //this class has all the communication events. All features should use this to talk to each other and not directly access.
 
@@ -25,14 +26,14 @@ public static class GlobalEvents
         OnPlayerDestroyedDoor?.Invoke();
     }
     public static GenericIntEvent OnPlayerStartDestroyAll;
-    public static void SendPlayerStartDestroyAll()
+    public static void SendPlayerStartDestroyAll(int whichtier)
     {
-        OnPlayerStartDestroyAll?.Invoke();
+        OnPlayerStartDestroyAll?.Invoke(whichtier);
     }
     public static GenericIntEvent OnPlayerDestroyedAll;
-    public static void SendPlayerDestroyedAll()
+    public static void SendPlayerDestroyedAll(int whichtier)
     {
-        OnPlayerDestroyedAll?.Invoke();
+        OnPlayerDestroyedAll?.Invoke(whichtier);
     }
     public static GenericEvent OnPlayerStartLeave;
     public static void SendPlayerStartLeave()
@@ -40,8 +41,14 @@ public static class GlobalEvents
         OnPlayerStartLeave?.Invoke();
     }
     public static GenericIntEvent OnPlayerLeaveComplete;
-    public static void SendPlayerLeaveComplete()
+    public static void SendPlayerLeaveComplete(int whichtier)
     {
-        OnPlayerLeaveComplete?.Invoke();
+        OnPlayerLeaveComplete?.Invoke(whichtier);
+    }
+
+    public static GenericBoolEvent OnMenuOpened;
+    public static void SendMenuOpened(bool isMenuOpen)
+    {
+        OnMenuOpened?.Invoke(isMenuOpen);
     }
 }
