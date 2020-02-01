@@ -22,7 +22,8 @@ public class GameStateManager : MonoBehaviour
     public float m_HeroAnnouncementDuration = 1.0f;
     public float m_RepairAnnouncementDuration = 2.0f;
 
-    public float m_RepairGameDuration = 300f;
+    public float m_RepairGameDuration = 90f;
+    public float m_ReturnGameDuration = 30f;
     private float m_CurrStateDuration = 0;
     void Awake()
     {
@@ -58,7 +59,7 @@ public class GameStateManager : MonoBehaviour
         m_CurrStateDuration = m_RepairAnnouncementDuration;
     }
 
-    float m_CurrReturnAnnouncementDuration = 4f;
+    float m_CurrReturnAnnouncementDuration = 0f;
     public float m_ReturnAnnouncementDuration = 4f;
     void HandleHeroQuestComplete()
     {
@@ -134,6 +135,7 @@ public class GameStateManager : MonoBehaviour
         if(m_CurrStateDuration <= 0)
         {
             GlobalEvents.SendRepairGameplayStart(m_RepairGameDuration);
+            GlobalEvents.SendRepairReturnDuration(m_ReturnGameDuration);
             m_GameState = GameState.REPAIR;
         }
     }
@@ -150,6 +152,21 @@ public class GameStateManager : MonoBehaviour
 
     void OnGUI()
     {
-
+        Rect displayRect = new Rect(100, 100, 1000, 100);
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.white;
+        style.fontSize = 60;
+        if(m_GameState == GameState.ANNOUNCEMENT_HERO)
+        {
+            GUI.Label(displayRect, "OUR GREAT HERO APPROACHES!", style);
+        }
+        else if(m_GameState == GameState.ANNOUNCEMENT_REPAIR)
+        {
+            GUI.Label(displayRect, "READY! SET! REPAIR!", style);
+        }
+        else if(m_CurrReturnAnnouncementDuration > 0)
+        {
+            GUI.Label(displayRect, "THE HERO IS RETURNING!", style);
+        }
     }
 }

@@ -88,12 +88,12 @@ public class InGameHero : MonoBehaviour
     void Update_NotActive()
     {
         //for now instantly enter the house - COMMENT oUT LATER
-        foreach(Renderer r in m_Renderers)
+        /*foreach(Renderer r in m_Renderers)
         {
             r.enabled = true;
         }
         
-        m_InGameHeroState = 1;
+        m_InGameHeroState = 1;*/
     }
 
     float m_StateDuration = 0;
