@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
 public enum GameState
 {
     INIT,
@@ -25,6 +26,12 @@ public class GameStateManager : MonoBehaviour
     public float m_RepairGameDuration = 90f;
     public float m_ReturnGameDuration = 30f;
     private float m_CurrStateDuration = 0;
+
+    public GameObject m_TextController;
+    public GameObject m_BlackText;
+    public GameObject m_WhiteText;
+
+    public AnimationCurve m_TextAppearCurve;
     void Awake()
     {
         if(GameStateManager.Instance != null)
@@ -32,6 +39,8 @@ public class GameStateManager : MonoBehaviour
             Destroy(this);
         }
         Instance = this;
+        m_BText = m_BlackText.GetComponent<Text>();
+        m_WText = m_WhiteText.GetComponent<Text>();
     }
 
     void OnEnable()
@@ -83,6 +92,7 @@ public class GameStateManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateUI();
         if(m_CurrReturnAnnouncementDuration > 0)
         {
             m_CurrReturnAnnouncementDuration -= Time.deltaTime;
@@ -150,23 +160,50 @@ public class GameStateManager : MonoBehaviour
         //todo:
     }
 
-    void OnGUI()
+    Text m_BText;
+    Text m_WText;
+    float m_ScaleX = 1;
+    float m_ScaleY = 1;
+
+    void ChangeScale(float scaleValue)
     {
-        Rect displayRect = new Rect(100, 100, 1000, 100);
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = Color.white;
-        style.fontSize = 60;
+        m_ScaleX = scaleValue;
+        m_ScaleY = scaleValue;
+
+        m_BlackText.transform.localScale = new Vector2(m_ScaleX,m_ScaleY);
+        m_WhiteText.transform.localScale = new Vector2(m_ScaleX,m_ScaleY);
+    }
+    void UpdateUI()
+    {
+
         if(m_GameState == GameState.ANNOUNCEMENT_HERO)
         {
-            GUI.Label(displayRect, "OUR GREAT HERO APPROACHES!", style);
+            m_TextController.SetActive(true);
+            m_BText.text = "Our great hero approaches!";
+            m_WText.text = "Our great hero approaches!";
+            ChangeScale(m_TextAppearCurve.Evaluate(m_HeroAnnouncementDuration - m_CurrStateDuration) );
+            
         }
         else if(m_GameState == GameState.ANNOUNCEMENT_REPAIR)
         {
-            GUI.Label(displayRect, "READY! SET! REPAIR!", style);
+            m_TextController.SetActive(true);
+            m_BText.text = "Ready! Set! Repair!";
+            m_WText.text = "Ready! Set! Repair!";
+            ChangeScale(m_TextAppearCurve.Evaluate(m_RepairAnnouncementDuration - m_CurrStateDuration));
         }
         else if(m_CurrReturnAnnouncementDuration > 0)
         {
-            GUI.Label(displayRect, "THE HERO IS RETURNING!", style);
+            m_TextController.SetActive(true);
+            m_BText.text = "The hero is returning!";
+            m_WText.text = "The hero is returning!";
+            ChangeScale(m_TextAppearCurve.Evaluate(m_ReturnAnnouncementDuration - m_CurrReturnAnnouncementDuration) );
+        }
+        else
+        {
+            m_TextController.SetActive(false);
+            m_ScaleX = m_ScaleY = 1;
+            m_BlackText.transform.localScale = new Vector2(m_ScaleX,m_ScaleY);
+            m_WhiteText.transform.localScale = new Vector2(m_ScaleX,m_ScaleY);
         }
     }
 }
