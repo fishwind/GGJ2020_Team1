@@ -9,6 +9,8 @@ public class InGameHero : MonoBehaviour
     public GameObject m_InHousePoint;
     public GameObject m_LeavePoint;
 
+    public float m_SpeedMultiplier = 3.0f;
+
     private int m_InGameHeroState = 0;
 
     private Renderer[] m_Renderers;
@@ -29,7 +31,10 @@ public class InGameHero : MonoBehaviour
         //init the hero and teleport him to the spawn point.
         gameObject.transform.position = m_SpawnPoint.transform.position;
         Vector3 forward = m_DoorDestroyPoint.transform.position - m_SpawnPoint.transform.position;
+        forward.y = 0;
+        forward = forward.normalized;
 
+        gameObject.transform.rotation = Quaternion.LookRotation(forward);
         //disable the visual
         m_Renderers = GetComponentsInChildren<Renderer>(true);
 
@@ -70,37 +75,119 @@ public class InGameHero : MonoBehaviour
         {
             r.enabled = true;
         }
-
+        
         m_InGameHeroState = 1;
     }
 
+    float m_StateDuration = 0;
     void Update_WalkToDoor()
     {
+        bool reached = MoveTowards(m_DoorDestroyPoint.transform.position);
 
+        if(reached)
+        {
+            m_StateDuration = 3.0f; //this should be animation time
+            m_InGameHeroState = 2;
+        }
     }
+
+    bool MoveTowards(Vector3 position)
+    {
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, position, Time.deltaTime * m_SpeedMultiplier);
+        Vector3 forward = position - gameObject.transform.position;
+        forward.y = 0;
+        forward = forward.normalized;
+        gameObject.transform.rotation = Quaternion.LookRotation(forward);
+
+        return (gameObject.transform.position - position).magnitude < (Time.deltaTime * 2);
+    }
+
 
     void Update_DestroyDoor()
     {
-
+        m_StateDuration -= Time.deltaTime;
+        if(m_StateDuration <= 0)
+        {
+            m_InGameHeroState = 3;
+        }
     }
 
     void Update_WalkIntoRoom()
     {
+        bool reached = MoveTowards(m_InHousePoint.transform.position);
 
+        if(reached)
+        {
+            m_StateDuration = 3.0f; //this should be animation time
+            m_InGameHeroState = 4;
+        }
     }
 
     void Update_JudgeRoom()
     {
+        m_StateDuration -= Time.deltaTime;
 
+        //look around
+
+
+        if(m_StateDuration <= 0)
+        {
+            m_StateDuration = 3.0f;
+            m_InGameHeroState = 5;
+        }
     }
 
     void Update_DestroyRoom()
     {
+        m_StateDuration -= Time.deltaTime;
+        //look back
+        gameObject.transform.rotation = Quaternion.LookRotation(Vector3.back);
 
+        if(m_StateDuration <= 0)
+        {
+            m_StateDuration = 3.0f;
+            m_InGameHeroState = 6;
+        }
     }
 
     void Update_Leave()
     {
+        bool reached = MoveTowards(m_LeavePoint.transform.position);
 
+        if(reached)
+        {
+            m_StateDuration = 3.0f; //this should be animation time
+            m_InGameHeroState = 0;
+        }
+    }
+
+    Camera m_MainCam;
+    void OnGUI()
+    {
+        if(m_MainCam == null)
+        {
+            m_MainCam = Camera.main;
+        }
+        Vector3 screenPos = m_MainCam.WorldToScreenPoint(gameObject.transform.position);
+        Rect displayRect = new Rect(screenPos.x, screenPos.y, 100, 1000);
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.red;
+        switch(m_InGameHeroState)
+        {
+            case 0: 
+            break;
+            case 1: 
+            break;
+            case 2: GUI.Label(displayRect, "BREAKING DOOR: " + m_StateDuration, style);
+            break;
+            case 3:
+            break;
+            case 4: GUI.Label(displayRect, "JUDGING ROOM: " + m_StateDuration, style);
+            break;
+            case 5: GUI.Label(displayRect, "DESTROY ROOM: " + m_StateDuration, style);
+            break;
+            case 6:
+            break;
+        }
     }
 }
