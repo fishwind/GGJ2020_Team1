@@ -74,16 +74,24 @@ public class PlayerController : MonoBehaviour
     }
 
     private void UpdateAction() {
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            if(m_Picker.m_PickedItem)
+            {
+                this.PickDropAction();
+                return;
+            }
             Transform item = m_ItemFinder.m_ItemInFront;
             if(!item) return;
 
             Entity entity = item.GetComponent<Entity>();
-            ItemActionState actionState = entity.ItemActionState;
+            if(!entity) return;
+
+            ItemActionState actionState = entity.currItemActionState;
             switch(actionState) {
-                case 1: this.PickDropAction(); break;
-                case 2: entity.Sweep(); break;
+                case ItemActionState.Pickup: this.PickDropAction(); break;
+                case ItemActionState.Repair: entity.StartRepairing(); break;
                 default: return;
             }
             
@@ -98,9 +106,5 @@ public class PlayerController : MonoBehaviour
             successful = m_Picker.DropItem();
 
         m_HasPicked = (successful)? !m_HasPicked : m_HasPicked;
-    }
-
-    private void Sweep() {
-
     }
 }

@@ -11,7 +11,7 @@ public class PlayerPicker : MonoBehaviour
     [SerializeField] private PlayerItemFinder m_ItemFinder = null;
     [SerializeField] private Transform m_PickedItemParent = null;
     [SerializeField] private Animator m_Anim = null;
-    private Transform m_PickedItem = null;
+    public Transform m_PickedItem = null;
 
     [Header("Settings")]
     [Space(10)]
