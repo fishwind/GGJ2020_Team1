@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator m_Anim = null;
     private Camera m_Cam = null;
     private Rigidbody m_Rbody = null;
+    private bool m_CanMove = false;
 
     [Header("Settings")]
     [Space(10)]
@@ -18,12 +19,21 @@ public class PlayerController : MonoBehaviour
     // Player private
     private bool m_HasPicked = false;
 
+    private void OnEnabled() {
+        GlobalEvents.OnMenuOpened += EnablePlayerMovement;
+    }
+
+    private void OnDisable() {
+        GlobalEvents.OnMenuOpened -= EnablePlayerMovement;                 
+    }
+
     private void Start() {
         m_Cam = Camera.main;
         m_Rbody = GetComponent<Rigidbody>();
     }
 
     private void Update() {
+        if(!m_CanMove) return;
         UpdateMovement();
         UpdateAction();
     }
@@ -84,7 +94,7 @@ public class PlayerController : MonoBehaviour
             Transform item = m_ItemFinder.m_ItemInFront;
             if(!item) return;
 
-            Entity entity = item.GetComponent<Entity>();
+            Entity entity = item.GetComponentInParent<Entity>();
             if(!entity) return;
 
             ItemActionState actionState = entity.currItemActionState;
@@ -95,6 +105,11 @@ public class PlayerController : MonoBehaviour
             }
             
         }
+    }
+
+    private void EnablePlayerMovement(bool canMove)
+    {
+        m_CanMove = canMove;
     }
 
     private void PickDropAction() {

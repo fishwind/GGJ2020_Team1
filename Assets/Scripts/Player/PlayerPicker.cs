@@ -27,9 +27,10 @@ public class PlayerPicker : MonoBehaviour
     public bool PickItem() {
         Transform item = m_ItemFinder.m_ItemInFront;
         if(!item || Vector3.Distance(item.position, transform.position) > 1.5f)  return false;
+        Entity entity = item.GetComponentInParent<Entity>();
 
         m_Anim.SetTrigger("Pickup");
-        item.GetComponentInChildren<Collider>().enabled = false;
+        entity.SetMeshColliders(false);
         item.parent = m_PickedItemParent;
         item.DOLocalMove(Vector3.zero, 0.3f);
         item.DOLocalRotate(Vector3.zero, 0.3f);
@@ -42,14 +43,15 @@ public class PlayerPicker : MonoBehaviour
         if(m_PickedItem == null) return false;
         if(!CheckCanDrop()) return false;
 
+        Entity entity = m_PickedItem.GetComponentInParent<Entity>();
         m_Anim.SetTrigger("Dropdown");
         m_PickedItem.parent = null;
-        Vector3 landPos = transform.position + transform.forward * m_Stats.m_PlaceDistance + GetComponent<Rigidbody>().velocity * 0.1f;
-        landPos.y = m_PickedItem.GetComponent<Entity>().GetPlaceHeight();
+        Vector3 landPos = transform.position + transform.forward * m_Stats.m_PlaceDistance + GetComponent<Rigidbody>().velocity * 0.2f;
+        landPos.y = m_PickedItem.GetComponentInParent<Entity>().GetPlaceHeight();
         m_PickedItem.DOKill();
         Sequence seq = DOTween.Sequence();
         seq.Append(m_PickedItem.DOMove(landPos, 0.5f));
-        seq.AppendCallback(()=>{m_PickedItem.GetComponentInChildren<Collider>().enabled = true;});
+        seq.AppendCallback(()=>{entity.SetMeshColliders(true);});
         seq.AppendCallback(()=>{m_PickedItem = null;});
         return true;
     }
