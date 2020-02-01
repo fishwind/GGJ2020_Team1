@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerPicker m_Picker = null;
     [SerializeField] private PlayerItemFinder m_ItemFinder = null;
     [SerializeField] private Animator m_Anim = null;
+
     private Camera m_Cam = null;
     private Rigidbody m_Rbody = null;
     public bool m_CanMove = true;
