@@ -15,6 +15,9 @@ MonoBehaviour:
   itemPlaceHeight: 1
   currItemState: 1
   currItemActionState: 1
+  meshUnfired: {fileID: 7731698706509196989}
+  meshFixed: {fileID: 8350828001308601201}
+  meshBroken: {fileID: 4899249349772457149}
   repairTime: 1
 --- !u!1001 &5952313933247206246
 PrefabInstance:
@@ -23,6 +26,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2413582155799902231, guid: 213c702d288fab241b893771654a02e3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2887822568333794916, guid: 213c702d288fab241b893771654a02e3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -88,6 +96,24 @@ PrefabInstance:
 --- !u!1 &7303943003182732953 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4018913508256564735, guid: 213c702d288fab241b893771654a02e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 5952313933247206246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7731698706509196989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4167622950479805915, guid: 213c702d288fab241b893771654a02e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 5952313933247206246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8350828001308601201 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2413582155799902231, guid: 213c702d288fab241b893771654a02e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 5952313933247206246}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4899249349772457149 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1254108115688679387, guid: 213c702d288fab241b893771654a02e3,
     type: 3}
   m_PrefabInstance: {fileID: 5952313933247206246}
   m_PrefabAsset: {fileID: 0}

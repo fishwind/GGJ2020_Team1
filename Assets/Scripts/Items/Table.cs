@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Table : Entity
 {
+    [Header("Item Variables")]
     public float repairTime;
     private Coroutine repairCoroutine;
 

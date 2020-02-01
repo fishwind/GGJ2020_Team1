@@ -4,11 +4,16 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairable
 {
-    public float itemPlaceHeight;
 
-    [Header("DO NOT EDIT IN INSPECTOR")]
+    [Header("Debug Stuff")]
+    public float itemPlaceHeight;
     public ItemStates currItemState = ItemStates.Fixed;
     public ItemActionState currItemActionState = ItemActionState.None;
+
+    // References to the Meshes
+    [SerializeField] private GameObject meshUnfired;
+    [SerializeField] private GameObject meshFixed;
+    [SerializeField] private GameObject meshBroken;
 
     #region IPlaceable
     public virtual float GetPlaceHeight()
@@ -41,6 +46,13 @@ public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairabl
     }
 
     #endregion
+
+    protected void UpdateItemMesh()
+    {
+        meshUnfired.SetActive(currItemState == ItemStates.Unfired);
+        meshFixed.SetActive(currItemState == ItemStates.Fixed);
+        meshBroken.SetActive(currItemState == ItemStates.Broken);
+    }
 
     // public abstract void AbstractMethod();
 }
