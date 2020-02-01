@@ -33,20 +33,22 @@ public class ProgressBarController : MonoBehaviour
 
         GlobalEvents.OnRepairGameplayStart += UpdateTimer;
         GlobalEvents.OnRepairReturnDuration += UpdateTimer;
+    }
 
-        gameTime = 10;
-
-        state = ProgressState.questing;
-        StartProgressBar(endAnchor.localPosition);
+    private void OnDestroy()
+    {
+        GlobalEvents.OnRepairGameplayStart -= UpdateTimer;
+        GlobalEvents.OnRepairReturnDuration -= UpdateTimer;
     }
 
     private void Update()
     {
-        //if (Input.GetKeyUp(KeyCode.J))
-        //{
-        //    heroProgress.localPosition = startAnchor.localPosition;
-        //    UpdateTimer(Random.Range(5, 10));
-        //}
+        if (state == ProgressState.start &&
+            GameStateManager.Instance.m_GameState == GameState.REPAIR)
+        {
+            state = ProgressState.questing;
+            StartProgressBar(endAnchor.localPosition);
+        }
     }
 
     private void ResetProgressBar()
@@ -77,6 +79,8 @@ public class ProgressBarController : MonoBehaviour
             GlobalEvents.SendHeroReturningToHouse();
 
             state = ProgressState.end;
+
+            ResetProgressBar();
             // disable hero anim?
         }
     }
