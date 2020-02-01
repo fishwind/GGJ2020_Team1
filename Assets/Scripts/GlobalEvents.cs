@@ -4,6 +4,7 @@ using UnityEngine;
 
 public delegate void GenericEvent();
 public delegate void GenericIntEvent(int val);
+public delegate void GenericBoolEvent(bool val);
 
 //this class has all the communication events. All features should use this to talk to each other and not directly access.
 
@@ -43,5 +44,11 @@ public static class GlobalEvents
     public static void SendPlayerLeaveComplete(int whichtier)
     {
         OnPlayerLeaveComplete?.Invoke(whichtier);
+    }
+
+    public static GenericBoolEvent OnMenuOpened;
+    public static void SendMenuOpened(bool isMenuOpen)
+    {
+        OnMenuOpened?.Invoke(isMenuOpen);
     }
 }
