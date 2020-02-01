@@ -30,6 +30,7 @@ public class PlayerPicker : MonoBehaviour
         Entity entity = item.GetComponentInParent<Entity>();
 
         m_Anim.SetTrigger("Pickup");
+        m_Anim.SetLayerWeight(1, 1);
         entity.SetMeshColliders(false);
         entity.transform.parent = m_PickedItemParent;
         entity.transform.DOLocalMove(Vector3.zero, 0.3f);
@@ -54,6 +55,12 @@ public class PlayerPicker : MonoBehaviour
         seq.Append(m_PickedItem.DOMove(landPos, 0.5f));
         seq.AppendCallback(()=>{entity.SetMeshColliders(true);});
         seq.AppendCallback(()=>{m_PickedItem = null;});
+        float weight = 0;
+        seq.AppendCallback(()=>{DOTween.To(()=> weight, x=> {
+            weight = x;
+            m_Anim.SetLayerWeight(1, weight);
+        }, 0, 0.01f);});
+        
         return true;
     }
 
