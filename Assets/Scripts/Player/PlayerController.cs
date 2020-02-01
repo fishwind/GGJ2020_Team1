@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
     }
 
     private void UpdateAction() {
-
         if(Input.GetKeyDown(KeyCode.Space))
         {
             if(m_Picker.m_PickedItem)

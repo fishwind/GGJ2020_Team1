@@ -17,6 +17,10 @@ public class PlayerPicker : MonoBehaviour
     [Space(10)]
     [SerializeField] private float m_PlaceDistance = 1f;
     
+    private void Start() {
+        m_PickedItem = null;
+    }
+
     public bool PickItem() {
         Transform item = m_ItemFinder.m_ItemInFront;
         if(!item)  return false;
@@ -37,11 +41,13 @@ public class PlayerPicker : MonoBehaviour
 
         m_Anim.SetTrigger("Dropdown");
         m_PickedItem.parent = null;
-        Vector3 landPos = transform.position + transform.forward * m_PlaceDistance;
-        landPos.y = m_PickedItem.GetComponent<Entity>().GetPlaceHeight() / 2;
+        Vector3 landPos = transform.position + transform.forward * m_PlaceDistance + GetComponent<Rigidbody>().velocity * 0.2f;
+        landPos.y = m_PickedItem.GetComponent<Entity>().GetPlaceHeight();
+        m_PickedItem.DOKill();
         Sequence seq = DOTween.Sequence();
         seq.Append(m_PickedItem.DOMove(landPos, 0.5f));
         seq.AppendCallback(()=>{m_PickedItem.GetComponentInChildren<Collider>().enabled = true;});
+        seq.AppendCallback(()=>{m_PickedItem = null;});
         return true;
     }
 
