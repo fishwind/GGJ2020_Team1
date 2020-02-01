@@ -87,8 +87,8 @@ public class PlayerPicker : MonoBehaviour
             return true;
         } else if (
            item.GetComponentInParent<PotteryWheel>()
-           && m_PickedItem.GetComponent<Clay>() != null
-           && m_PickedItem.GetComponent<Clay>().currItemState == ItemStates.CraftMat)
+           && m_PickedItem.GetComponent<CraftMat>() != null
+           && m_PickedItem.GetComponent<CraftMat>().currItemState == ItemStates.CraftMat)
         {
             return true;
         } else {
