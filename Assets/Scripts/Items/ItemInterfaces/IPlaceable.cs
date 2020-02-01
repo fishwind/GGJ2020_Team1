@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPlaceable
 {
-    float getPlaceHeight();
+    float GetPlaceHeight();
 }

@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
+public class Pot : Entity
 {
     // Variables to tweak
-    public float itemPlaceHeight;
     public float repairTime;
-    public ItemStates currItemState = ItemStates.Fixed;
-    public ItemActionState currItemActionState = ItemActionState.None;
 
     // Define Enums
     public Animator animator;
-
     private Coroutine repairCoroutine;
 
     #region Public Methods
@@ -59,7 +55,7 @@ public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
 
     #region IBreakable
     // Used by the "Hero"
-    public void AttemptBreak()
+    public override void AttemptBreak()
     {
         // Only Break if Already Fixed
         if (currItemState == ItemStates.Fixed)
@@ -80,7 +76,7 @@ public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
 
     #region IRepairable
     // Used By Player to start Repairing Item
-    public void StartRepairing()
+    public override void StartRepairing()
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine == null)
@@ -88,7 +84,7 @@ public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
     }
 
     // Used By Player to stop Repairing Item in the middle of repairing
-    public void StopRepairing()
+    public override void StopRepairing()
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine != null)
@@ -103,7 +99,7 @@ public class Pot : MonoBehaviour, IRepairable, IBreakable, IPlaceable
     #endregion
 
     #region IPlaceable
-    public float getPlaceHeight()
+    public override float GetPlaceHeight()
     {
         return itemPlaceHeight;
     }
