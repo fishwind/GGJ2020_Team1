@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+public enum ProgressState
+{
+    start = 0,
+    questing = 1,
+    returning = 2,
+    end = 3
+}
+
 public class ProgressBarController : MonoBehaviour
 {
     public Transform heroProgress;
@@ -25,32 +33,35 @@ public class ProgressBarController : MonoBehaviour
 
         GlobalEvents.OnRepairGameplayStart += UpdateTimer;
         GlobalEvents.OnRepairReturnDuration += UpdateTimer;
+    }
 
-        gameTime = 10;
-        StartProgressBar(endAnchor.localPosition);
+    private void OnDestroy()
+    {
+        GlobalEvents.OnRepairGameplayStart -= UpdateTimer;
+        GlobalEvents.OnRepairReturnDuration -= UpdateTimer;
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.J))
+        if (state == ProgressState.start &&
+            GameStateManager.Instance.m_GameState == GameState.REPAIR)
         {
-            heroProgress.localPosition = startAnchor.localPosition;
-            UpdateTimer(Random.Range(5, 10));
+            state = ProgressState.questing;
+            StartProgressBar(endAnchor.localPosition);
         }
     }
 
     private void ResetProgressBar()
     {
-        Count = 0;
+        state = ProgressState.start;
     }
 
     private void StartProgressBar(Vector3 destination)
     {
-        Count++;
         heroProgress.DOLocalMove(destination, gameTime).OnComplete(ReachedEnd);
     }
 
-    private int Count = 0;
+    private ProgressState state = 0;
     private void ReachedEnd()
     {
         GlobalEvents.SendHeroQuestComplete();
@@ -58,8 +69,20 @@ public class ProgressBarController : MonoBehaviour
         rotation *= -1;
         heroImage.transform.DOScaleX(rotation, 0.3f);
 
-        if (Count > 0 && Count < 2)
+        if (state > ProgressState.start && state < ProgressState.returning)
+        {
+            state = ProgressState.returning;
             StartProgressBar(startAnchor.localPosition);
+        }
+        else
+        {
+            GlobalEvents.SendHeroReturningToHouse();
+
+            state = ProgressState.end;
+
+            ResetProgressBar();
+            // disable hero anim?
+        }
     }
 
     private void UpdateTimer(float timer)
