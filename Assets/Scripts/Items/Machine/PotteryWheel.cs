@@ -65,11 +65,14 @@ public class PotteryWheel : MonoBehaviour
         GameObject unfiredPot = Instantiate(prefabPotUnfired, transform.position, transform.rotation);
         float scale = unfiredPot.transform.localScale.x;
         unfiredPot.transform.localScale = Vector3.zero;
+
         // throw out pot todo:
         Sequence seq = DOTween.Sequence();
         seq.Append(unfiredPot.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
         seq.Join(unfiredPot.transform.DOScale(Vector3.one * scale, 0.4f));
         seq.Append(unfiredPot.transform.DOMove(m_SpawnPoint.position, 0.6f));
+        seq.AppendCallback(() => { unfiredPot.GetComponent<Entity>().SetMeshColliders(true); });
+
         m_Asource.PlayOneShot(m_PotDoneClip);
     }
 }

@@ -56,6 +56,8 @@ public class Furnace : MonoBehaviour
         seq.Append(pot.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
         seq.Join(pot.transform.DOScale(Vector3.one, 0.4f));
         seq.Append(pot.transform.DOMove(m_SpawnPoint.position, 0.6f));
+        seq.AppendCallback(() => { pot.GetComponent<Entity>().SetMeshColliders(true); });
+
         m_Asource.PlayOneShot(m_PotDoneClip);
     }
 }
