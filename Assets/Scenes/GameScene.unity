@@ -670,7 +670,7 @@ MonoBehaviour:
   m_HeroAnnouncementDuration: 1
   m_RepairAnnouncementDuration: 2
   m_RepairGameDuration: 90
-  m_ReturnGameDuration: 30
+  m_ReturnGameDuration: 45
   m_ReturnAnnouncementDuration: 4
 --- !u!4 &877187029
 Transform:
@@ -752,6 +752,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354231943605402939, guid: f146466fe7d82624b8db14ce2c60a7f3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f146466fe7d82624b8db14ce2c60a7f3, type: 3}
