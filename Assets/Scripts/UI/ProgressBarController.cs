@@ -33,7 +33,7 @@ public class ProgressBarController : MonoBehaviour
     public Transform endAnchor;
 
     [Header("Obstacles")]
-    public List<Transform> eventAnchors;
+    public ProgressEventController eventController;
 
     private float gameTime;
     private int rotation = 1;
@@ -61,6 +61,9 @@ public class ProgressBarController : MonoBehaviour
             GameStateManager.Instance.m_GameState == GameState.REPAIR)
         {
             terrainController.scrollingTerrain = true;
+            eventController.SpawnRandomEvents(heroProgress);
+            eventController.ShowEvent();
+
             state = ProgressState.questing;
             StartProgressBar(endAnchor.localPosition);
         }
@@ -95,6 +98,7 @@ public class ProgressBarController : MonoBehaviour
             // disable hero anim?
 
             terrainController.scrollingTerrain = false;
+            eventController.ResetEvent();
         }
 
         HandleFlip();
