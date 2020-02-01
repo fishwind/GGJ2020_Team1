@@ -31,10 +31,10 @@ public class PlayerPicker : MonoBehaviour
 
         m_Anim.SetTrigger("Pickup");
         entity.SetMeshColliders(false);
-        item.parent = m_PickedItemParent;
-        item.DOLocalMove(Vector3.zero, 0.3f);
-        item.DOLocalRotate(Vector3.zero, 0.3f);
-        m_PickedItem = item;
+        entity.transform.parent = m_PickedItemParent;
+        entity.transform.DOLocalMove(Vector3.zero, 0.3f);
+        entity.transform.DOLocalRotate(Vector3.zero, 0.3f);
+        m_PickedItem = entity.transform;
         m_ItemFinder.m_ItemInFront = null;
         return true;
     }
@@ -44,10 +44,11 @@ public class PlayerPicker : MonoBehaviour
         if(!CheckCanDrop()) return false;
 
         Entity entity = m_PickedItem.GetComponentInParent<Entity>();
+        float height = entity.GetPlaceHeight();
         m_Anim.SetTrigger("Dropdown");
         m_PickedItem.parent = null;
         Vector3 landPos = transform.position + transform.forward * m_Stats.m_PlaceDistance + GetComponent<Rigidbody>().velocity * 0.2f;
-        landPos.y = m_PickedItem.GetComponentInParent<Entity>().GetPlaceHeight();
+        landPos.y = height;
         m_PickedItem.DOKill();
         Sequence seq = DOTween.Sequence();
         seq.Append(m_PickedItem.DOMove(landPos, 0.5f));

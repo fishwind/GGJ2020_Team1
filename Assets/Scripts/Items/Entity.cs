@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairable
 {
-
     [Header("Debug Stuff")]
     public float itemPlaceHeight;
     public ItemStates currItemState = ItemStates.Fixed;

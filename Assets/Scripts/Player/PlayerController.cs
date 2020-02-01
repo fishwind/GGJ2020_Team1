@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator m_Anim = null;
     private Camera m_Cam = null;
     private Rigidbody m_Rbody = null;
-    private bool m_CanMove = false;
+    public bool m_CanMove = true;
 
     [Header("Settings")]
     [Space(10)]
