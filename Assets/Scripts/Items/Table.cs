@@ -8,12 +8,47 @@ public class Table : Entity
     public float repairTime;
     private Coroutine repairCoroutine;
 
+    #region Init / Destroy
+    private void Awake()
+    {
+        GlobalEvents.OnPlayerStartDestroyAll += AttemptBreak;
+    }
+
+    private void OnDestroy()
+    {
+        GlobalEvents.OnPlayerStartDestroyAll -= AttemptBreak;
+    }
+    #endregion
+
+    #region Private Methods
+    void Break()
+    {
+        currItemState = ItemStates.Broken;
+        currItemActionState = ItemActionState.Repair;
+
+        UpdateItemMesh();
+
+        // TODO: Animations, Play Sounds
+    }
+
+    void Repair()
+    {
+        currItemState = ItemStates.Fixed;
+        currItemActionState = ItemActionState.None;
+
+        UpdateItemMesh();
+
+        // TODO: Animations, Play Sounds
+    }
+
+    #endregion
+
     #region IRepairable
     // Used By Player to start Repairing Item
     public override void StartRepairing()
     {
         // Stop Coroutine if currently in Progress
-        if (repairCoroutine == null)
+        if (repairCoroutine == null && currItemState == ItemStates.Broken)
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
     }
 
@@ -37,10 +72,7 @@ public class Table : Entity
 
         if (currItemState == ItemStates.Broken)
         {
-            currItemState = ItemStates.Fixed;
-            currItemActionState = ItemActionState.Pickup;
-
-            // TODO: Destroy the Object, Clean up, Animations, Play Sounds
+            Repair();
         }
     }
 
@@ -48,6 +80,23 @@ public class Table : Entity
     {
         yield return new WaitForSeconds(repairTime);
         CompleteRepairing();
+    }
+    #endregion
+
+    #region IBreakable
+    public override void AttemptBreak(int itemTier)
+    {
+        // TODO: Check if Hero Lvl Strng Enuff to break
+
+        // Only Break if Already Fixed
+        if (currItemState == ItemStates.Fixed)
+        {
+            Break();
+        }
+        else
+        {
+            // TODO: Feedback to player/system that pot not fixed
+        }
     }
     #endregion
 }

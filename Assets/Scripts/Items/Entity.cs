@@ -16,43 +16,40 @@ public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairabl
     [SerializeField] private GameObject meshBroken;
 
     #region IPlaceable
-    public virtual float GetPlaceHeight()
+    public float GetPlaceHeight()
     {
-        throw new System.NotImplementedException();
+        return itemPlaceHeight;
     }
     #endregion
 
     #region IBreakable
-    public virtual void AttemptBreak()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void AttemptBreak(int itemTier);
     #endregion
 
     #region IRepairable
-    public virtual void StartRepairing()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void StartRepairing();
 
-    public virtual void StopRepairing()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void StopRepairing();
 
-    public virtual void CompleteRepairing()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void CompleteRepairing();
 
     #endregion
 
+    #region Mesh Methods
     protected void UpdateItemMesh()
     {
         meshUnfired.SetActive(currItemState == ItemStates.Unfired);
         meshFixed.SetActive(currItemState == ItemStates.Fixed);
         meshBroken.SetActive(currItemState == ItemStates.Broken);
     }
+
+    public void SetMeshColliders(bool isActive)
+    {
+        meshUnfired.GetComponent<Collider>().enabled = isActive;
+        meshFixed.GetComponent<Collider>().enabled = isActive;
+        meshBroken.GetComponent<Collider>().enabled = isActive;
+    }
+    #endregion
 
     // public abstract void AbstractMethod();
 }

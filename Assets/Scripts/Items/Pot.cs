@@ -8,6 +8,18 @@ public class Pot : Entity, IFireable
     public float repairTime;
     private Coroutine repairCoroutine;
 
+    #region Init / Destroy
+    private void Awake()
+    {
+        GlobalEvents.OnPlayerStartDestroyAll += AttemptBreak;
+    }
+
+    private void OnDestroy()
+    {
+        GlobalEvents.OnPlayerStartDestroyAll -= AttemptBreak;
+    }
+    #endregion
+
     #region Public Methods
     // Used by the Lvl/Map Manager
     public void CreateFixedPot()
@@ -63,9 +75,10 @@ public class Pot : Entity, IFireable
     #endregion
 
     #region IBreakable
-    // Used by the "Hero"
-    public override void AttemptBreak()
+    public override void AttemptBreak(int itemTier)
     {
+        // TODO: Check if Hero Lvl Strng Enuff to break
+
         // Only Break if Already Fixed
         if (currItemState == ItemStates.Fixed)
         {
@@ -73,8 +86,6 @@ public class Pot : Entity, IFireable
         }
         else
         {
-            // TODO: Check if Hero Lvl Strng Enuff to break
-
             // TODO: Feedback to player/system that pot not fixed
         }
     }
@@ -118,13 +129,6 @@ public class Pot : Entity, IFireable
     {
         yield return new WaitForSeconds(repairTime);
         CompleteRepairing();
-    }
-    #endregion
-
-    #region IPlaceable
-    public override float GetPlaceHeight()
-    {
-        return itemPlaceHeight;
     }
     #endregion
 

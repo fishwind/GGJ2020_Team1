@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPlaceHeight: 1
   currItemState: 1
-  currItemActionState: 1
+  currItemActionState: 0
   meshUnfired: {fileID: 2440498856471244405}
   meshFixed: {fileID: 4140776283745725369}
   meshBroken: {fileID: 679839680126317685}
