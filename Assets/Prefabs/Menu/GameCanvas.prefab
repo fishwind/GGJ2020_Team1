@@ -130,6 +130,7 @@ MonoBehaviour:
   - {fileID: 1741601890711484950}
   - {fileID: 8265912778517810125}
   - {fileID: 3979064928546107767}
+  inputCD: 0.3
 --- !u!1 &4748368057043206758
 GameObject:
   m_ObjectHideFlags: 0
