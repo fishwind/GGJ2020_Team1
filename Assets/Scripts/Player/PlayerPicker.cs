@@ -38,7 +38,7 @@ public class PlayerPicker : MonoBehaviour
         m_Anim.SetTrigger("Dropdown");
         m_PickedItem.parent = null;
         Vector3 landPos = transform.position + transform.forward * m_PlaceDistance;
-        landPos.y = 1;
+        landPos.y = m_PickedItem.GetComponent<Entity>().GetPlaceHeight() / 2;
         Sequence seq = DOTween.Sequence();
         seq.Append(m_PickedItem.DOMove(landPos, 0.5f));
         seq.AppendCallback(()=>{m_PickedItem.GetComponentInChildren<Collider>().enabled = true;});
