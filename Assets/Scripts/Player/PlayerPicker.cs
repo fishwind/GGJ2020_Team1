@@ -11,7 +11,9 @@ public class PlayerPicker : MonoBehaviour
     [SerializeField] private PlayerItemFinder m_ItemFinder = null;
     [SerializeField] private Transform m_PickedItemParent = null;
     [SerializeField] private Animator m_Anim = null;
+    [SerializeField] private AudioClip m_CannotDropClip = null;
     public Transform m_PickedItem = null;
+    private AudioSource m_Asource = null;
 
     [Header("Settings")]
     [Space(10)]
@@ -19,11 +21,12 @@ public class PlayerPicker : MonoBehaviour
     
     private void Start() {
         m_PickedItem = null;
+        m_Asource = GetComponent<AudioSource>();
     }
 
     public bool PickItem() {
         Transform item = m_ItemFinder.m_ItemInFront;
-        if(!item)  return false;
+        if(!item || Vector3.Distance(item.position, transform.position) > 1.5f)  return false;
 
         m_Anim.SetTrigger("Pickup");
         item.GetComponentInChildren<Collider>().enabled = false;
@@ -41,7 +44,7 @@ public class PlayerPicker : MonoBehaviour
 
         m_Anim.SetTrigger("Dropdown");
         m_PickedItem.parent = null;
-        Vector3 landPos = transform.position + transform.forward * m_PlaceDistance + GetComponent<Rigidbody>().velocity * 0.2f;
+        Vector3 landPos = transform.position + transform.forward * m_Stats.m_PlaceDistance + GetComponent<Rigidbody>().velocity * 0.1f;
         landPos.y = m_PickedItem.GetComponent<Entity>().GetPlaceHeight();
         m_PickedItem.DOKill();
         Sequence seq = DOTween.Sequence();
@@ -52,10 +55,17 @@ public class PlayerPicker : MonoBehaviour
     }
 
     private bool CheckCanDrop() {
-        if(m_ItemFinder.m_ItemInFront == null)  {
+        Transform item = m_ItemFinder.m_ItemInFront;
+        if(item == null)  {
+            return true;
+        } else if (
+            (item.GetComponentInParent<Furnace>() && m_PickedItem.GetComponent<Pot>().currItemState == ItemStates.Unfired)
+        ) {
             return true;
         } else {
-            // check if in front is placeable
+            // todo: play cannot drop sound
+            m_Asource.PlayOneShot(m_CannotDropClip);
+            Debug.Log(">>>> cannot drop");
             return false;
         }
     }
