@@ -55,6 +55,7 @@ public class Furnace : MonoBehaviour
     private IEnumerator FiringPot(Pot pot) {
         m_BurnTimer = m_Stats.m_FurnaceRepairTime;
         pot.transform.DOScale(Vector3.zero, 0.4f);
+        transform.DOShakeRotation(m_Stats.m_FurnaceRepairTime);
         yield return new WaitForSeconds(m_Stats.m_FurnaceRepairTime);
         pot.CompleteFiring();
         PotDoneFeedback(pot); 
