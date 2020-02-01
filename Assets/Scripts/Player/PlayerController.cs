@@ -57,11 +57,6 @@ public class PlayerController : MonoBehaviour
         if(!m_CanMove) return;
         UpdateMovement();
         UpdateAction();
-
-        if (Input.GetKeyUp(KeyCode.J))
-        {
-            GlobalEvents.SendPlayerStartDestroyAll(1);
-        }
     }
 
     private void FixedUpdate() {

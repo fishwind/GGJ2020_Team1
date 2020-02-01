@@ -89,7 +89,13 @@ public class ProgressEventController : MonoBehaviour
     {
         int i = prevCounter;
         var pos = eventObjs[i].position;
-        eventObjs[i].DOLocalMoveY(offscreenPosY, tweenDuration);
+
+        eventObjs[i].DOScale(Vector3.one * 2, tweenDuration / 2).SetEase(tweenCurve)
+            .OnComplete(() => eventObjs[i].DOScale(Vector3.one, tweenDuration / 2));
+
+        eventObjs[i].DOLocalMoveY(onscreenPosY + 10, tweenDuration / 2)
+            .OnComplete(() => eventObjs[i].DOLocalMoveY(offscreenPosY, tweenDuration));
+
         CameraShake.Instance.Shake(0.1f, 0.1f);
     }
 

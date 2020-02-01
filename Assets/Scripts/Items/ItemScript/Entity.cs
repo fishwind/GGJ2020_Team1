@@ -22,7 +22,7 @@ public class Entity : MonoBehaviour, IPlaceable
         return itemPlaceHeight;
     }
 
-    public bool CANIBREAK(int itemTier) { return this.itemTier > itemTier; }
+    public bool CANIBREAK(int itemTier) { return this.itemTier <= itemTier; }
 
     #endregion
 

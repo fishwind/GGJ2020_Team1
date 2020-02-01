@@ -77,6 +77,7 @@ public class ProgressBarController : MonoBehaviour
 
     private void StartProgressBar(Vector3 destination)
     {
+        heroAnim.SetBool("startWalk", true);
         heroProgress.DOLocalMove(destination, gameTime).OnComplete(ReachedEnd);
     }
 
@@ -96,8 +97,8 @@ public class ProgressBarController : MonoBehaviour
             state = ProgressState.end;
 
             ResetProgressBar();
-            // disable hero anim?
 
+            heroAnim.SetBool("startWalk", false);
             terrainController.scrollingTerrain = false;
             eventController.ResetEvent();
             progressionTier++;
