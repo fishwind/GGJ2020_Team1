@@ -87,6 +87,6 @@ public class Furnace : MonoBehaviour
         seq.Append(thrownObject.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
         seq.Join(thrownObject.transform.DOScale(Vector3.one * scale, 0.4f));
         seq.Append(thrownObject.transform.DOMove(m_SpawnPoint.position, 0.6f));
-        seq.AppendCallback(() => { thrownObject.GetComponent<Entity>().SetMeshColliders(true); });
+        seq.AppendCallback(() => { thrownObject.GetComponent<Entity>().SetMeshColliders(true);} );
     }
 }

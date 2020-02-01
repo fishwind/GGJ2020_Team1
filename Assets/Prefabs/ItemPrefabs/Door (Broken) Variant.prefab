@@ -12,10 +12,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2605772921132148734, guid: e377a00d00b41f44585d83ba1d98477a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2974815140247522527, guid: e377a00d00b41f44585d83ba1d98477a,
         type: 3}
       propertyPath: m_Name
-      value: Door (Broken)
+      value: Door (Broken) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3935369004808066884, guid: e377a00d00b41f44585d83ba1d98477a,
         type: 3}
@@ -71,6 +76,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4247350331569703667, guid: e377a00d00b41f44585d83ba1d98477a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4247350331569703667, guid: e377a00d00b41f44585d83ba1d98477a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4607290445429616951, guid: e377a00d00b41f44585d83ba1d98477a,
         type: 3}
