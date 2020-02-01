@@ -9,6 +9,7 @@ public class Furnace : MonoBehaviour
     public RepairMachineStats m_Stats = null;
     public AudioClip m_PotDoneClip = null;
     public AudioClip m_BurningClip = null;
+    public AudioClip m_MachineRejectClip = null;
     public Transform m_SpawnPoint;
     public ParticleSystem m_BurnParticles = null;
 
@@ -35,11 +36,20 @@ public class Furnace : MonoBehaviour
 
     private void OnTriggerEnter(Collider col) {
         Pot pot = col.gameObject.GetComponentInParent<Pot>();
-        if(!pot) return;
-        IFireable ifire = (IFireable)pot.GetComponent(typeof(IFireable));
-        if(ifire != null && ifire.CheckIfFireable()) {
-            StartCoroutine(FiringPot(pot));
+        if (!pot) {
+            Entity someEntity = col.gameObject.GetComponentInParent<Entity>();
+            if (someEntity != null)
+                RejectObject(someEntity.gameObject);
+        } else {
+            IFireable ifire = (IFireable)pot.GetComponent(typeof(IFireable));
+            if (ifire != null && ifire.CheckIfFireable())
+            {
+                StartCoroutine(FiringPot(pot));
+            } else {
+                RejectObject(pot.gameObject);
+            }
         }
+        
     }
 
     private IEnumerator FiringPot(Pot pot) {
@@ -51,13 +61,32 @@ public class Furnace : MonoBehaviour
     }
 
     private void PotDoneFeedback(Pot pot) {
-        // throw out pot todo:
-        Sequence seq = DOTween.Sequence();
-        seq.Append(pot.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
-        seq.Join(pot.transform.DOScale(Vector3.one, 0.4f));
-        seq.Append(pot.transform.DOMove(m_SpawnPoint.position, 0.6f));
-        seq.AppendCallback(() => { pot.GetComponent<Entity>().SetMeshColliders(true); });
+        // Off Collider #IMPT to avoid infinte loop
+        pot.GetComponent<Entity>().SetMeshColliders(false);
+
+        ShootOutObject(pot.gameObject, 1.0f);
 
         m_Asource.PlayOneShot(m_PotDoneClip);
+    }
+
+    private void RejectObject(GameObject rejectObject)
+    {
+        // Off Collider #IMPT to avoid infinte loop
+        rejectObject.GetComponent<Entity>().SetMeshColliders(false);
+
+        float scale = rejectObject.transform.localScale.x;
+        rejectObject.transform.localScale = Vector3.zero;
+        ShootOutObject(rejectObject, scale);
+
+        m_Asource.PlayOneShot(m_MachineRejectClip);
+    }
+
+    private void ShootOutObject(GameObject thrownObject, float scale)
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(thrownObject.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
+        seq.Join(thrownObject.transform.DOScale(Vector3.one * scale, 0.4f));
+        seq.Append(thrownObject.transform.DOMove(m_SpawnPoint.position, 0.6f));
+        seq.AppendCallback(() => { thrownObject.GetComponent<Entity>().SetMeshColliders(true); });
     }
 }

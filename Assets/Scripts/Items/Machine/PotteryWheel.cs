@@ -9,6 +9,7 @@ public class PotteryWheel : MonoBehaviour
     public RepairMachineStats m_Stats = null;
     public AudioClip m_PotDoneClip = null;
     public AudioClip m_BurningClip = null;
+    public AudioClip m_MachineRejectClip = null;
     public Transform m_SpawnPoint;
     public ParticleSystem m_BurnParticles = null;
 
@@ -42,14 +43,23 @@ public class PotteryWheel : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
         CraftMat craftMat = col.gameObject.GetComponentInParent<CraftMat>();
-        if (!craftMat || craftMat.currItemState != ItemStates.CraftMat) return;
-
-        // TODO: Recipes
-        if (craftMat.currCraftMatType == CraftMatType.Clay)
+        if (!craftMat || craftMat.currItemState != ItemStates.CraftMat)
         {
-            StartCoroutine(CraftingCoroutine());
-            Destroy(craftMat.gameObject);
+            Entity someEntity = col.gameObject.GetComponentInParent<Entity>();
+            if(someEntity != null)
+                RejectObject(someEntity.gameObject);
+        } else {
+            // Check if CraftMat Match
+            if (craftMat.currCraftMatType == CraftMatType.Clay)
+            {
+                StartCoroutine(CraftingCoroutine());
+                Destroy(craftMat.gameObject);
+            } else {
+                RejectObject(craftMat.gameObject);
+            }
         }
+
+        
     }
 
     private IEnumerator CraftingCoroutine()
@@ -63,16 +73,33 @@ public class PotteryWheel : MonoBehaviour
     {
         // Instantiate Pot
         GameObject unfiredPot = Instantiate(prefabPotUnfired, transform.position, transform.rotation);
-        float scale = unfiredPot.transform.localScale.x;
-        unfiredPot.transform.localScale = Vector3.zero;
+        // Off Collider #IMPT to avoid infinte loop
+        unfiredPot.GetComponent<Entity>().SetMeshColliders(false);
 
-        // throw out pot todo:
-        Sequence seq = DOTween.Sequence();
-        seq.Append(unfiredPot.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
-        seq.Join(unfiredPot.transform.DOScale(Vector3.one * scale, 0.4f));
-        seq.Append(unfiredPot.transform.DOMove(m_SpawnPoint.position, 0.6f));
-        seq.AppendCallback(() => { unfiredPot.GetComponent<Entity>().SetMeshColliders(true); });
+        ShootOutObject(unfiredPot);
 
         m_Asource.PlayOneShot(m_PotDoneClip);
+    }
+
+    private void RejectObject(GameObject rejectObject)
+    {
+        // Off Collider #IMPT to avoid infinte loop
+        rejectObject.GetComponent<Entity>().SetMeshColliders(false);
+
+        ShootOutObject(rejectObject);
+
+        m_Asource.PlayOneShot(m_MachineRejectClip);
+    }
+
+    private void ShootOutObject(GameObject thrownObject)
+    {
+        float scale = thrownObject.transform.localScale.x;
+        thrownObject.transform.localScale = Vector3.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(thrownObject.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
+        seq.Join(thrownObject.transform.DOScale(Vector3.one * scale, 0.4f));
+        seq.Append(thrownObject.transform.DOMove(m_SpawnPoint.position, 0.6f));
+        seq.AppendCallback(() => { thrownObject.GetComponent<Entity>().SetMeshColliders(true); });
     }
 }

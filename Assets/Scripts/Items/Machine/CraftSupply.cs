@@ -33,35 +33,30 @@ public class CraftSupply : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider col)
-    {
-        // Check If col is craft mat
-        CraftMat craftMat = col.gameObject.GetComponentInParent<CraftMat>();
-        if (!craftMat || craftMat.currItemState != ItemStates.CraftMat) return;
-
-        // Check if craft mat is Clay
-        if (craftMat.currCraftMatType == CraftMatType.Clay)
-        {
-            SpawnNewCraftMat();
-        }
-    }
-
     void SpawnNewCraftMat()
     {
         // Instantiate Pot
         GameObject newCraftMat = Instantiate(prefabCraftMat, transform.position, transform.rotation);
-        float scale = newCraftMat.transform.localScale.x;
-        newCraftMat.transform.localScale = Vector3.zero;
+
+        // Off Collider #IMPT to avoid infinte loop
+        newCraftMat.GetComponent<Entity>().SetMeshColliders(false);
 
         spawnedCrateRef = newCraftMat;
 
-        // throw out pot todo:
-        Sequence seq = DOTween.Sequence();
-        seq.Append(newCraftMat.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
-        seq.Join(newCraftMat.transform.DOScale(Vector3.one * scale, 0.4f));
-        seq.Append(newCraftMat.transform.DOMove(m_SpawnPoint.position, 0.6f));
-        seq.AppendCallback(() => { newCraftMat.GetComponent<Entity>().SetMeshColliders(true); });
+        ShootOutObject(newCraftMat);
 
         m_Asource.PlayOneShot(m_SpawnCraftMatFinClip);
+    }
+
+    private void ShootOutObject(GameObject thrownObject)
+    {
+        float scale = thrownObject.transform.localScale.x;
+        thrownObject.transform.localScale = Vector3.zero;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(thrownObject.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
+        seq.Join(thrownObject.transform.DOScale(Vector3.one * scale, 0.4f));
+        seq.Append(thrownObject.transform.DOMove(m_SpawnPoint.position, 0.6f));
+        seq.AppendCallback(() => { thrownObject.GetComponent<Entity>().SetMeshColliders(true); });
     }
 }

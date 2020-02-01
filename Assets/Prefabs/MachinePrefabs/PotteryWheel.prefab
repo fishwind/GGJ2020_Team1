@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Stats: {fileID: 11400000, guid: 453b0fef713c2ec4396470d5f1530559, type: 2}
   m_PotDoneClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
   m_BurningClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
+  m_MachineRejectClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
   m_SpawnPoint: {fileID: 5501915138997778303}
   m_BurnParticles: {fileID: 5501915140441119327}
   prefabPotUnfired: {fileID: 782379437172434744, guid: d3093365919bb834d8e4019e26361914,
