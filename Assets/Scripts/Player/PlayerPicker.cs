@@ -62,8 +62,16 @@ public class PlayerPicker : MonoBehaviour
         if(item == null)  {
             return true;
         } else if (
-            (item.GetComponentInParent<Furnace>() && m_PickedItem.GetComponent<Pot>().currItemState == ItemStates.Unfired)
-        ) {
+            item.GetComponentInParent<Furnace>() 
+            && m_PickedItem.GetComponent<Pot>() != null 
+            && m_PickedItem.GetComponent<Pot>().currItemState == ItemStates.Unfired)
+        {
+            return true;
+        } else if (
+           item.GetComponentInParent<PotteryWheel>()
+           && m_PickedItem.GetComponent<Clay>() != null
+           && m_PickedItem.GetComponent<Clay>().currItemState == ItemStates.CraftMat)
+        {
             return true;
         } else {
             // todo: play cannot drop sound

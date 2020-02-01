@@ -34,7 +34,7 @@ public class Furnace : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider col) {
-        Pot pot = col.gameObject.GetComponent<Pot>();
+        Pot pot = col.gameObject.GetComponentInParent<Pot>();
         if(!pot) return;
         IFireable ifire = (IFireable)pot.GetComponent(typeof(IFireable));
         if(ifire != null && ifire.CheckIfFireable()) {
@@ -44,6 +44,7 @@ public class Furnace : MonoBehaviour
 
     private IEnumerator FiringPot(Pot pot) {
         m_BurnTimer = m_Stats.m_FurnaceRepairTime;
+        pot.transform.DOScale(Vector3.zero, 0.4f);
         yield return new WaitForSeconds(m_Stats.m_FurnaceRepairTime);
         pot.CompleteFiring();
         PotDoneFeedback(pot); 
@@ -53,6 +54,7 @@ public class Furnace : MonoBehaviour
         // throw out pot todo:
         Sequence seq = DOTween.Sequence();
         seq.Append(pot.transform.DOMove(transform.position + Vector3.up + transform.forward, 0.4f));
+        seq.Join(pot.transform.DOScale(Vector3.one, 0.4f));
         seq.Append(pot.transform.DOMove(m_SpawnPoint.position, 0.6f));
         m_Asource.PlayOneShot(m_PotDoneClip);
     }

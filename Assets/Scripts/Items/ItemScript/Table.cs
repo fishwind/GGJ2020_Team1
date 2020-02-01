@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pot : Entity, IFireable
+public class Table : Entity, IBreakable, IRepairable
 {
     [Header("Item Variables")]
     public float repairTime;
@@ -20,26 +20,6 @@ public class Pot : Entity, IFireable
     }
     #endregion
 
-    #region Public Methods
-    // Used by the Lvl/Map Manager
-    public void CreateFixedPot()
-    {
-        currItemState = ItemStates.Fixed;
-        currItemActionState = ItemActionState.Pickup;
-        // TODO: Animations, Play Sounds
-
-    }
-
-    // Used by the Pottery Wheel
-    public void CreateUnfiredPot()
-    {
-        currItemState = ItemStates.Unfired;
-        currItemActionState = ItemActionState.Pickup;
-        // TODO: Animations, Play Sounds
-
-    }
-    #endregion
-
     #region Private Methods
     void Break()
     {
@@ -53,19 +33,8 @@ public class Pot : Entity, IFireable
 
     void Repair()
     {
-        currItemState = ItemStates.Cleared;
-        currItemActionState = ItemActionState.None;
-
-        UpdateItemMesh();
-
-        // TODO: Destroy the Object, Clean up, Animations, Play Sounds
-        Destroy(gameObject);
-    }
-
-    void Fired()
-    {
         currItemState = ItemStates.Fixed;
-        currItemActionState = ItemActionState.Pickup;
+        currItemActionState = ItemActionState.None;
 
         UpdateItemMesh();
 
@@ -74,26 +43,9 @@ public class Pot : Entity, IFireable
 
     #endregion
 
-    #region IBreakable
-    public override void AttemptBreak(int itemTier)
-    {
-        // TODO: Check if Hero Lvl Strng Enuff to break
-
-        // Only Break if Already Fixed
-        if (currItemState == ItemStates.Fixed)
-        {
-            Break();
-        }
-        else
-        {
-            // TODO: Feedback to player/system that pot not fixed
-        }
-    }
-    #endregion
-
     #region IRepairable
     // Used By Player to start Repairing Item
-    public override void StartRepairing()
+    public void StartRepairing()
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine == null && currItemState == ItemStates.Broken)
@@ -101,7 +53,7 @@ public class Pot : Entity, IFireable
     }
 
     // Used By Player to stop Repairing Item in the middle of repairing
-    public override void StopRepairing()
+    public void StopRepairing()
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine != null)
@@ -109,7 +61,7 @@ public class Pot : Entity, IFireable
     }
 
     // Broken >> Cleared
-    public override void CompleteRepairing()
+    public void CompleteRepairing()
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine != null)
@@ -124,7 +76,6 @@ public class Pot : Entity, IFireable
         }
     }
 
-
     IEnumerator RepairingingCoroutine()
     {
         yield return new WaitForSeconds(repairTime);
@@ -132,18 +83,20 @@ public class Pot : Entity, IFireable
     }
     #endregion
 
-    #region IFireable
-    public void CompleteFiring()
+    #region IBreakable
+    public void AttemptBreak(int itemTier)
     {
-        if (currItemState == ItemStates.Unfired)
-        {
-            Fired();
-        }
-    }
+        // TODO: Check if Hero Lvl Strng Enuff to break
 
-    public bool CheckIfFireable()
-    {
-        return (currItemState == ItemStates.Unfired);
+        // Only Break if Already Fixed
+        if (currItemState == ItemStates.Fixed)
+        {
+            Break();
+        }
+        else
+        {
+            // TODO: Feedback to player/system that pot not fixed
+        }
     }
     #endregion
 }

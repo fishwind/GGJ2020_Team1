@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairable
+public class Entity : MonoBehaviour, IPlaceable
 {
     [Header("Debug Stuff")]
     public float itemPlaceHeight;
@@ -21,6 +21,27 @@ public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairabl
     }
     #endregion
 
+    #region Mesh Methods
+    protected void UpdateItemMesh()
+    {
+        meshUnfired.SetActive(currItemState == ItemStates.Unfired);
+        meshFixed.SetActive(currItemState == ItemStates.Fixed);
+        meshBroken.SetActive(currItemState == ItemStates.Broken);
+    }
+
+    public void SetMeshColliders(bool isActive)
+    {
+        if (meshUnfired != null)
+            meshUnfired.GetComponent<Collider>().enabled = isActive;
+        if (meshFixed != null)
+            meshFixed.GetComponent<Collider>().enabled = isActive;
+        if (meshBroken != null)
+            meshBroken.GetComponent<Collider>().enabled = isActive;
+    }
+    #endregion
+
+    #region Old Code
+    /*
     #region IBreakable
     public abstract void AttemptBreak(int itemTier);
     #endregion
@@ -33,21 +54,7 @@ public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairabl
     public abstract void CompleteRepairing();
 
     #endregion
-
-    #region Mesh Methods
-    protected void UpdateItemMesh()
-    {
-        meshUnfired.SetActive(currItemState == ItemStates.Unfired);
-        meshFixed.SetActive(currItemState == ItemStates.Fixed);
-        meshBroken.SetActive(currItemState == ItemStates.Broken);
-    }
-
-    public void SetMeshColliders(bool isActive)
-    {
-        meshUnfired.GetComponent<Collider>().enabled = isActive;
-        meshFixed.GetComponent<Collider>().enabled = isActive;
-        meshBroken.GetComponent<Collider>().enabled = isActive;
-    }
+    */
     #endregion
 
     // public abstract void AbstractMethod();

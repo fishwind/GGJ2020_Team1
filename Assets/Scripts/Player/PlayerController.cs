@@ -100,7 +100,11 @@ public class PlayerController : MonoBehaviour
             ItemActionState actionState = entity.currItemActionState;
             switch(actionState) {
                 case ItemActionState.Pickup: this.PickDropAction(); break;
-                case ItemActionState.Repair: entity.StartRepairing(); break;
+                case ItemActionState.Repair:
+                    IRepairable repairable  = (IRepairable)entity.GetComponent(typeof(IRepairable));
+                    if(repairable != null)
+                        repairable.StartRepairing();
+                    break;
                 default: return;
             }
             
