@@ -59,7 +59,8 @@ public class PlayerController : MonoBehaviour
         // animation
         Vector3 animationVelocity = m_Rbody.velocity;
         animationVelocity.y = 0;
-        m_Anim.SetFloat("Speed", animationVelocity.sqrMagnitude);
+        m_Anim.SetFloat("Speed", animationVelocity.magnitude);
+        Debug.Log(">>>>>>>> speed sqr"  + animationVelocity.sqrMagnitude);
 
 
         if(dir == Vector3.zero) return;
