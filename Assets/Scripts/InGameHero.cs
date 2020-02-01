@@ -32,9 +32,9 @@ public class InGameHero : MonoBehaviour
 
     void HandlePlayerApproachHouse()
     {
-        if(m_InGameHeroState == 0)
+        if (m_InGameHeroState == 0)
         {
-            foreach(Renderer r in m_Renderers)
+            foreach (Renderer r in m_Renderers)
             {
                 r.enabled = true;
             }
@@ -55,7 +55,7 @@ public class InGameHero : MonoBehaviour
         //disable the visual
         m_Renderers = GetComponentsInChildren<Renderer>(true);
 
-        foreach(Renderer r in m_Renderers)
+        foreach (Renderer r in m_Renderers)
         {
             r.enabled = false;
         }
@@ -66,22 +66,29 @@ public class InGameHero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(m_InGameHeroState)
+        switch (m_InGameHeroState)
         {
-            case 0: Update_NotActive();
-            break;
-            case 1: Update_WalkToDoor();
-            break;
-            case 2: Update_DestroyDoor();
-            break;
-            case 3: Update_WalkIntoRoom();
-            break;
-            case 4: Update_JudgeRoom();
-            break;
-            case 5: Update_DestroyRoom();
-            break;
-            case 6: Update_Leave();
-            break;
+            case 0:
+                Update_NotActive();
+                break;
+            case 1:
+                Update_WalkToDoor();
+                break;
+            case 2:
+                Update_DestroyDoor();
+                break;
+            case 3:
+                Update_WalkIntoRoom();
+                break;
+            case 4:
+                Update_JudgeRoom();
+                break;
+            case 5:
+                Update_DestroyRoom();
+                break;
+            case 6:
+                Update_Leave();
+                break;
         }
     }
 
@@ -101,7 +108,7 @@ public class InGameHero : MonoBehaviour
     {
         bool reached = MoveTowards(m_DoorDestroyPoint.transform.position);
 
-        if(reached)
+        if (reached)
         {
             GlobalEvents.SendPlayerStartDestroyDoor();
             m_StateDuration = 3.0f; //this should be animation time
@@ -114,7 +121,7 @@ public class InGameHero : MonoBehaviour
     {
         float dist = (gameObject.transform.position - position).magnitude;
 
-        if(dist < m_SlowdownDistanceThreshold)
+        if (dist < m_SlowdownDistanceThreshold)
         {
             m_MovementSpeed = Mathf.Lerp(m_MovementSpeed, 0.1f, Time.deltaTime * m_AccelMultiplier);
         }
@@ -124,7 +131,7 @@ public class InGameHero : MonoBehaviour
         }
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, position, Time.deltaTime * m_MovementSpeed);
         Vector3 forward = position - gameObject.transform.position;
-        if(forward.magnitude > 0.1f)
+        if (forward.magnitude > 0.1f)
         {
             forward.y = 0;
             forward = forward.normalized;
@@ -136,13 +143,23 @@ public class InGameHero : MonoBehaviour
         return dist < (Time.deltaTime * 2);
     }
 
-
+    float knockCD;
     void Update_DestroyDoor()
     {
         m_StateDuration -= Time.deltaTime;
-        if(m_StateDuration <= 0)
+        knockCD -= Time.deltaTime;
+
+        if (m_StateDuration > 0 && knockCD < 0)
+        {
+            int multiplier = Mathf.CeilToInt(m_StateDuration);
+            CameraShake.Instance.Shake(0.1f * multiplier, 0.25f / multiplier);
+            knockCD = 1;
+        }
+
+        if (m_StateDuration <= 0)
         {
             GlobalEvents.SendPlayerDestroyedDoor();
+            CameraShake.Instance.Shake(0.3f);
             m_InGameHeroState = 3;
         }
     }
@@ -151,7 +168,7 @@ public class InGameHero : MonoBehaviour
     {
         bool reached = MoveTowards(m_InHousePoint.transform.position);
 
-        if(reached)
+        if (reached)
         {
             m_StateDuration = 3.0f; //this should be animation time
             m_InGameHeroState = 4;
@@ -165,7 +182,7 @@ public class InGameHero : MonoBehaviour
         //look around
 
 
-        if(m_StateDuration <= 0)
+        if (m_StateDuration <= 0)
         {
             GlobalEvents.SendPlayerStartDestroyAll(1); //value from gamestatemanager
             m_StateDuration = 3.0f;
@@ -179,7 +196,7 @@ public class InGameHero : MonoBehaviour
         //look back
         RotateToward(Vector3.back);
 
-        if(m_StateDuration <= 0)
+        if (m_StateDuration <= 0)
         {
             GlobalEvents.SendPlayerDestroyedAll(1);
             m_StateDuration = 3.0f;
@@ -190,7 +207,7 @@ public class InGameHero : MonoBehaviour
 
     void RotateToward(Vector3 dir)
     {
-        Vector3 newForward = Vector3.RotateTowards(gameObject.transform.forward, dir, Time.deltaTime * m_RotateSpeed,Time.deltaTime * m_RotateSpeed);
+        Vector3 newForward = Vector3.RotateTowards(gameObject.transform.forward, dir, Time.deltaTime * m_RotateSpeed, Time.deltaTime * m_RotateSpeed);
         newForward.y = 0;
         gameObject.transform.rotation = Quaternion.LookRotation(newForward);
     }
@@ -199,7 +216,7 @@ public class InGameHero : MonoBehaviour
     {
         bool reached = MoveTowards(m_LeavePoint.transform.position);
 
-        if(reached)
+        if (reached)
         {
             GlobalEvents.SendPlayerLeaveComplete(1);
             m_StateDuration = 3.0f; //this should be animation time
@@ -210,7 +227,7 @@ public class InGameHero : MonoBehaviour
     Camera m_MainCam;
     void OnGUI()
     {
-        if(m_MainCam == null)
+        if (m_MainCam == null)
         {
             m_MainCam = Camera.main;
         }
@@ -218,22 +235,25 @@ public class InGameHero : MonoBehaviour
         Rect displayRect = new Rect(screenPos.x, screenPos.y, 100, 1000);
         GUIStyle style = new GUIStyle();
         style.normal.textColor = Color.red;
-        switch(m_InGameHeroState)
+        switch (m_InGameHeroState)
         {
-            case 0: 
-            break;
-            case 1: 
-            break;
-            case 2: GUI.Label(displayRect, "BREAKING DOOR: " + m_StateDuration, style);
-            break;
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                GUI.Label(displayRect, "BREAKING DOOR: " + m_StateDuration, style);
+                break;
             case 3:
-            break;
-            case 4: GUI.Label(displayRect, "JUDGING ROOM: " + m_StateDuration, style);
-            break;
-            case 5: GUI.Label(displayRect, "DESTROY ROOM: " + m_StateDuration, style);
-            break;
+                break;
+            case 4:
+                GUI.Label(displayRect, "JUDGING ROOM: " + m_StateDuration, style);
+                break;
+            case 5:
+                GUI.Label(displayRect, "DESTROY ROOM: " + m_StateDuration, style);
+                break;
             case 6:
-            break;
+                break;
         }
     }
 }
