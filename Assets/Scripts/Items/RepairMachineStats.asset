@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ed1a374b13ce64a929bc4846244fcd, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: 528620a78c0e4094e85cbb96d6d09e6a, type: 3}
+  m_Name: RepairMachineStats
   m_EditorClassIdentifier: 
-  m_MovePower: 10000
-  m_MaxSpeed: 2
-  m_RotateSpeed: 8
-  m_PlaceDistance: 2
+  m_FurnaceRepairTime: 2
