@@ -128,7 +128,8 @@ public class InGameHero : MonoBehaviour
         {
             forward.y = 0;
             forward = forward.normalized;
-            gameObject.transform.rotation = Quaternion.LookRotation(forward);
+            RotateToward(forward);
+            //gameObject.transform.rotation = Quaternion.LookRotation(forward);
         }
 
 
