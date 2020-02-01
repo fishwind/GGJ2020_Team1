@@ -34,8 +34,13 @@ public abstract class Entity : MonoBehaviour, IPlaceable, IBreakable, IRepairabl
     {
         throw new System.NotImplementedException();
     }
+
+    public virtual void CompleteRepairing()
+    {
+        throw new System.NotImplementedException();
+    }
+
     #endregion
 
     // public abstract void AbstractMethod();
-
 }
