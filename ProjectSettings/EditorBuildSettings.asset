@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/PlayerFurnace.unity
+    guid: e43ef0d93dd1f604194d9560a0309495
   m_configObjects: {}

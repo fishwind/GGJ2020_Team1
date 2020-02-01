@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 7128d4362930cdf49af453e3157fb158
+guid: 2d4a0d147fda5554380821b4e1883e8a
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_TROOP_SMOL
-    second: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
