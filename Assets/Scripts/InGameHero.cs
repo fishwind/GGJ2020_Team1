@@ -218,7 +218,7 @@ public class InGameHero : MonoBehaviour
 
     IEnumerator DelayDestroyObjects(float delay) {
         yield return new WaitForSeconds(delay);
-        GlobalEvents.SendPlayerDestroyedAll(1);
+        GlobalEvents.SendPlayerDestroyedAll(ProgressBarController.Instance.progressionTier);
     }
 
     IEnumerator DelayCollectCoin(float delay) {
