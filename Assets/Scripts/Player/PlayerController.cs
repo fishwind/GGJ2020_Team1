@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour
         if(!canMove)
         {
             Sequence seq = DOTween.Sequence();
-            Vector3 targetPos = m_InitialPos - Vector3.up * 3f;
+            Vector3 targetPos = transform.position - Vector3.up * 3f;
             seq.Append(transform.DOMove(targetPos, 0.4f));
         }       
         else {
