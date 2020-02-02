@@ -336,6 +336,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBoxWood
       objectReference: {fileID: 0}
+    - target: {fileID: 689028697344530942, guid: 88413cd9303532b45982935406398586,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: 689028697344530942, guid: 88413cd9303532b45982935406398586,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 689028697344530942, guid: 88413cd9303532b45982935406398586,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 689028697344530942, guid: 88413cd9303532b45982935406398586,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 689028697344530942, guid: 88413cd9303532b45982935406398586,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88413cd9303532b45982935406398586, type: 3}
 --- !u!4 &5466693666462811529 stripped

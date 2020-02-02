@@ -5098,6 +5098,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorkStation
       objectReference: {fileID: 0}
+    - target: {fileID: 2207019041998251064, guid: 5cf20e6c91482354abfa22f8ec831fde,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207019041998251064, guid: 5cf20e6c91482354abfa22f8ec831fde,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207019041998251064, guid: 5cf20e6c91482354abfa22f8ec831fde,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cf20e6c91482354abfa22f8ec831fde, type: 3}
 --- !u!4 &7981387805761383028 stripped
