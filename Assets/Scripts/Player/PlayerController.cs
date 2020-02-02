@@ -32,10 +32,8 @@ public class PlayerController : MonoBehaviour
 
     // Player private
     private bool m_HasPicked = false;
-    private Vector3 m_InitialPos;
 
     private void OnEnable() {
-        m_InitialPos = transform.position;
         GlobalEvents.OnPlayerMoveAllowChange += EnablePlayerMovement;
     }
 
@@ -146,6 +144,7 @@ public class PlayerController : MonoBehaviour
                         repairableSweep.StartRepairing();
                         m_CanMove = false;
                         m_Anim.SetBool("Sweep", true);
+
                         m_HoldActiveCoroutine = StartCoroutine(HoldingActive(repairableSweep, actionState));
                         m_RepairToBeStopped = repairableSweep;
                         m_HoldingActiveAction = true;
@@ -159,17 +158,6 @@ public class PlayerController : MonoBehaviour
     private void EnablePlayerMovement(bool canMove)
     {
         m_CanMove = canMove;
-        if(!canMove)
-        {
-            Sequence seq = DOTween.Sequence();
-            Vector3 targetPos = transform.position - Vector3.up * 3f;
-            seq.Append(transform.DOMove(targetPos, 0.4f));
-        }       
-        else {
-            Sequence seq = DOTween.Sequence();
-            transform.position = m_InitialPos + Vector3.up * 20f;
-            seq.Append(transform.DOMove(m_InitialPos, 0.4f));
-        }
     }
 
     private void PickDropAction() {
