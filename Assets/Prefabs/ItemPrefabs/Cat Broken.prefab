@@ -102,6 +102,31 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8621878810574585466, guid: 620e35b67f9ad9b49b46383512560126,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: 8621878810574585466, guid: 620e35b67f9ad9b49b46383512560126,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621878810574585466, guid: 620e35b67f9ad9b49b46383512560126,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621878810574585466, guid: 620e35b67f9ad9b49b46383512560126,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621878810574585466, guid: 620e35b67f9ad9b49b46383512560126,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3760002789553119221, guid: 620e35b67f9ad9b49b46383512560126, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 620e35b67f9ad9b49b46383512560126, type: 3}

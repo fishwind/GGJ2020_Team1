@@ -29,7 +29,7 @@ public class Table : Entity, IBreakable, IRepairable
         UpdateItemMesh();
 
         // TODO: Animations, Play Sounds
-        BreakFeedback();
+        StartVisualFeedback();
     }
 
     void Repair()
@@ -50,7 +50,10 @@ public class Table : Entity, IBreakable, IRepairable
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine == null && currItemState == ItemStates.Broken)
+        {
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
+            StartVisualFeedback();
+        }
     }
 
     // Used By Player to stop Repairing Item in the middle of repairing
@@ -58,7 +61,10 @@ public class Table : Entity, IBreakable, IRepairable
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine != null)
+        {
             StopCoroutine(repairCoroutine);
+            StopVisualFeedback();
+        }
     }
 
     // Broken >> Cleared
