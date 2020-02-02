@@ -23,7 +23,8 @@ public class ScoreTesterSpawner : MonoBehaviour
     {
         if (entity.currItemState == ItemStates.Fixed)
         {
-            Instantiate(m_TesterPrefab, transform.position, Quaternion.identity);
+            ScoreTester tester = Instantiate(m_TesterPrefab, transform.position, Quaternion.identity).GetComponent<ScoreTester>();
+            tester.InitExpectedComponents(entity);
         }
     }
 }
