@@ -297,6 +297,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3450549971910337314}
     m_Modifications:
+    - target: {fileID: -7072581221800116976, guid: d118df448d99c9e4b8886d53b568ed9f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: -7072581221800116976, guid: d118df448d99c9e4b8886d53b568ed9f,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7072581221800116976, guid: d118df448d99c9e4b8886d53b568ed9f,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7072581221800116976, guid: d118df448d99c9e4b8886d53b568ed9f,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7072581221800116976, guid: d118df448d99c9e4b8886d53b568ed9f,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d118df448d99c9e4b8886d53b568ed9f,
         type: 3}
       propertyPath: m_LocalPosition.x

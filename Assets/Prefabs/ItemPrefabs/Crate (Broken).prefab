@@ -142,6 +142,11 @@ PrefabInstance:
       propertyPath: m_ReflectionProbeUsage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7339518373358688581, guid: f13fa926339f733469c15e14d8847633,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8457272253800918775, guid: f13fa926339f733469c15e14d8847633,
         type: 3}
       propertyPath: m_IsActive
