@@ -36,6 +36,7 @@ MonoBehaviour:
   m_BurnParticles: {fileID: 129866260718557585}
   defaultDuration: 1
   repairTime: 2
+  m_Coins: {fileID: 1959920301573774886, guid: 663a3c2995c1a9d4a93b81460e1c1410, type: 3}
 --- !u!1001 &1095978716217449670
 PrefabInstance:
   m_ObjectHideFlags: 0

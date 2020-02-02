@@ -76,4 +76,10 @@ public static class GlobalEvents
     {
         OnHeroReturningToHouse?.Invoke();
     }
+
+    public static GenericEvent OnCollectCoins;
+    public static void SendCollectCoins()
+    {
+        OnCollectCoins?.Invoke();
+    }
 }
