@@ -11,12 +11,12 @@ public class Crate : Entity, IBreakable, IRepairable
     #region Init / Destroy
     private void Awake()
     {
-        GlobalEvents.OnPlayerStartDestroyAll += AttemptBreak;
+        GlobalEvents.OnPlayerDestroyedAll += AttemptBreak;
     }
 
     private void OnDestroy()
     {
-        GlobalEvents.OnPlayerStartDestroyAll -= AttemptBreak;
+        GlobalEvents.OnPlayerDestroyedAll -= AttemptBreak;
     }
     #endregion
 
