@@ -24,6 +24,7 @@ public class ScoreTester : MonoBehaviour
         foreach(Entity e in m_EntitiesNearby)
         {
             if(e is Pot) m_ExpectedType = typeof(Pot);
+            else if (e is Crate) m_ExpectedType = typeof(Crate);
             else if (e is Table) m_ExpectedType = typeof(Table);
             else if (e is CraftMat) m_ExpectedType = typeof(CraftMat);
         }
