@@ -76,6 +76,10 @@ public class Table : Entity, IBreakable, IRepairable
             Repair();
         }
     }
+ 
+    public float GetRepairTime() {
+        return repairTime;
+    }
 
     IEnumerator RepairingingCoroutine()
     {

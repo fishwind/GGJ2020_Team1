@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPaused: 0
+  TEST_TIER_LEVEL: 0
 --- !u!114 &8354231943605402936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1011,22 +1012,17 @@ PrefabInstance:
     - target: {fileID: 4398031354457015544, guid: 20b1d5336e9079c439f8c02cfcd2104b,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.51
       objectReference: {fileID: 0}
     - target: {fileID: 4398031354457015544, guid: 20b1d5336e9079c439f8c02cfcd2104b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4398031354741618388, guid: 20b1d5336e9079c439f8c02cfcd2104b,
         type: 3}
       propertyPath: m_Name
       value: HoldingBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398031354741618392, guid: 20b1d5336e9079c439f8c02cfcd2104b,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4398031354741618395, guid: 20b1d5336e9079c439f8c02cfcd2104b,
         type: 3}
@@ -1132,6 +1128,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398031355381488400, guid: 20b1d5336e9079c439f8c02cfcd2104b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20b1d5336e9079c439f8c02cfcd2104b, type: 3}

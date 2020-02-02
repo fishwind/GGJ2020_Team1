@@ -12,4 +12,6 @@ public interface IRepairable
 
     // Used by the Player when they stop halfway while repairing Broken Items
     void CompleteRepairing();
+
+    float GetRepairTime();
 }

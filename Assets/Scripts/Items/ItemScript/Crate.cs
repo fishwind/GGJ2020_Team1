@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crate : Entity, IBreakable
+public class Crate : Entity, IBreakable, IRepairable
 {
     [Header("Item Variables")]
     public float repairTime;
@@ -58,6 +58,50 @@ public class Crate : Entity, IBreakable
         {
             // TODO: Feedback to player/system that pot not fixed
         }
+    }
+    #endregion
+
+    #region IRepairable
+    // Used By Player to start Repairing Item
+    public void StartRepairing()
+    {
+        // Stop Coroutine if currently in Progress
+        if (repairCoroutine == null && currItemState == ItemStates.Broken)
+            repairCoroutine = StartCoroutine(RepairingingCoroutine());
+    }
+
+    // Used By Player to stop Repairing Item in the middle of repairing
+    public void StopRepairing()
+    {
+        // Stop Coroutine if currently in Progress
+        if (repairCoroutine != null)
+            StopCoroutine(repairCoroutine);
+    }
+
+    // Broken >> Cleared
+    public void CompleteRepairing()
+    {
+        // Stop Coroutine if currently in Progress
+        if (repairCoroutine != null)
+        {
+            StopCoroutine(repairCoroutine);
+            repairCoroutine = null;
+        }
+
+        if (currItemState == ItemStates.Broken)
+        {
+            Repair();
+        }
+    }
+
+    public float GetRepairTime() {
+        return repairTime;
+    }
+
+    IEnumerator RepairingingCoroutine()
+    {
+        yield return new WaitForSeconds(repairTime);
+        CompleteRepairing();
     }
     #endregion
 

@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
         m_ProgressSlider.transform.localPosition = new Vector3(transform.position.x, m_ProgressSlider.transform.position.y, transform.position.z);
         m_ProgressSlider.transform.rotation = Quaternion.LookRotation(Camera.main.transform.position - transform.position, Vector3.up);
         m_ProgressSlider.value = 0;
-        m_ProgressSlider.maxValue = 3;
+        m_ProgressSlider.maxValue = repairable.GetRepairTime();
         if(state == ItemActionState.RepairHit)  m_Asource.clip = m_HittingClip;
         if(state == ItemActionState.RepairSweep)  m_Asource.clip = m_SweepingClip;
         m_Asource.Play();

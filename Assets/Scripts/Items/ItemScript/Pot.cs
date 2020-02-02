@@ -124,7 +124,10 @@ public class Pot : Entity, IFireable, IBreakable, IRepairable
             Repair();
         }
     }
-
+    
+    public float GetRepairTime() {
+        return repairTime;
+    }
 
     IEnumerator RepairingingCoroutine()
     {
