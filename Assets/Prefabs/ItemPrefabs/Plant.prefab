@@ -20,7 +20,7 @@ MonoBehaviour:
   meshFixed: {fileID: 8396882122283861719}
   meshBroken: {fileID: 4944406260640160027}
   m_BurnParticles: {fileID: 5263786250260427214}
-  timer: 1
+  defaultDuration: 1
 --- !u!1001 &1475857409911051771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97,6 +97,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: -2928802812470180509, guid: fcd56abac6dcd57469d4a5d05d78e84e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: -2928802812470180509, guid: fcd56abac6dcd57469d4a5d05d78e84e,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2928802812470180509, guid: fcd56abac6dcd57469d4a5d05d78e84e,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2928802812470180509, guid: fcd56abac6dcd57469d4a5d05d78e84e,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: fcd56abac6dcd57469d4a5d05d78e84e,
         type: 3}

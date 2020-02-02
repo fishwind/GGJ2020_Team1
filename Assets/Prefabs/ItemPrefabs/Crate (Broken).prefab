@@ -122,6 +122,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate (Broken)
       objectReference: {fileID: 0}
+    - target: {fileID: 7339518373358688581, guid: f13fa926339f733469c15e14d8847633,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: 7339518373358688581, guid: f13fa926339f733469c15e14d8847633,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339518373358688581, guid: f13fa926339f733469c15e14d8847633,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339518373358688581, guid: f13fa926339f733469c15e14d8847633,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8457272253800918775, guid: f13fa926339f733469c15e14d8847633,
         type: 3}
       propertyPath: m_IsActive

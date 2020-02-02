@@ -249,6 +249,12 @@ public class InGameHero : MonoBehaviour
             m_Anim.SetBool("Walking", true);
         if (reached)
         {
+            foreach (Renderer r in m_Renderers)
+            {
+                r.enabled = false;
+            }
+            gameObject.transform.position = m_SpawnPoint.transform.position;
+
             if(m_Anim.GetBool("Walking") == true)
                 m_Anim.SetBool("Walking", false);
             GlobalEvents.SendPlayerLeaveComplete(1);
@@ -266,7 +272,7 @@ public class InGameHero : MonoBehaviour
     Camera m_MainCam;
     void OnGUI()
     {
-        if (m_MainCam == null)
+        /*if (m_MainCam == null)
         {
             m_MainCam = Camera.main;
         }
@@ -293,6 +299,6 @@ public class InGameHero : MonoBehaviour
                 break;
             case 6:
                 break;
-        }
+        }*/
     }
 }
