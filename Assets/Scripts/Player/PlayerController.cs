@@ -158,6 +158,7 @@ public class PlayerController : MonoBehaviour
     private void EnablePlayerMovement(bool canMove)
     {
         m_CanMove = canMove;
+        m_Anim.SetBool("Cower", !m_CanMove);
     }
 
     private void PickDropAction() {
