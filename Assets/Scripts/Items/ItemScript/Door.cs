@@ -11,12 +11,12 @@ public class Door : Entity, IBreakable, IRepairable
     #region Init / Destroy
     private void Awake()
     {
-        GlobalEvents.OnPlayerStartDestroyDoor += AttemptBreak;
+        GlobalEvents.OnPlayerDestroyedDoor += AttemptBreak;
     }
 
     private void OnDestroy()
     {
-        GlobalEvents.OnPlayerStartDestroyDoor -= AttemptBreak;
+        GlobalEvents.OnPlayerDestroyedDoor -= AttemptBreak;
     }
     #endregion
 
