@@ -49,7 +49,19 @@ public class PotteryWheel : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
+        if (crafting)
+        {
+            Entity e = col.gameObject.GetComponentInParent<Entity>();
+            if (e != null)
+            {
+                RejectObject(e.gameObject);
+            }
+
+            return;
+        }
+
         CraftMat craftMat = col.gameObject.GetComponentInParent<CraftMat>();
+
         if (!craftMat || craftMat.currItemState != ItemStates.CraftMat)
         {
             Entity someEntity = col.gameObject.GetComponentInParent<Entity>();
@@ -103,6 +115,7 @@ public class PotteryWheel : MonoBehaviour
         }
     }
 
+    private bool crafting = false;
     private IEnumerator CraftingCoroutine(CraftMatType type)
     {
         m_BurnTimer = m_Stats.m_FurnaceRepairTime;
@@ -112,6 +125,7 @@ public class PotteryWheel : MonoBehaviour
         if (type == CraftMatType.Wood) woodCount = 0;
 
         Feedback();
+        crafting = true;
         yield return new WaitForSeconds(m_Stats.m_FurnaceRepairTime);
         CraftDoneFeedback(type);
     }
@@ -128,6 +142,8 @@ public class PotteryWheel : MonoBehaviour
 
         if (type == CraftMatType.Wood)
             CreateCrate();
+
+        crafting = false;
     }
 
     private void CreatePot()
