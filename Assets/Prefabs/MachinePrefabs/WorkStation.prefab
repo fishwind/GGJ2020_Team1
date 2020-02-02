@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Stats: {fileID: 11400000, guid: 453b0fef713c2ec4396470d5f1530559, type: 2}
-  m_PotDoneClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
+  m_PotDoneClip: {fileID: 8300000, guid: cbac22cefce8c0843852e32086a44fb4, type: 3}
   m_BurningClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
   m_MachineRejectClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
   m_SpawnPoint: {fileID: 5501915138997778303}
