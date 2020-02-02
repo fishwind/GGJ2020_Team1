@@ -50,7 +50,7 @@ public class GameMenuController : MonoBehaviour
         if (Input.GetButtonUp("Cancel"))
         {
             isMenuDisplayed = !isMenuDisplayed;
-            GlobalEvents.SendPlayerMoveAllowChange(canMove: isMenuDisplayed);
+            GlobalEvents.SendPlayerMoveAllowChange(canMove: !isMenuDisplayed);
             ShowMenu(isMenuDisplayed);
         }
 
