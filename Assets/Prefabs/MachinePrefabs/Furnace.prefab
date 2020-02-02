@@ -4980,7 +4980,7 @@ MonoBehaviour:
   m_Stats: {fileID: 11400000, guid: 0aaa69f4a3f044040bbad7a69fd0e69b, type: 2}
   m_PotDoneClip: {fileID: 8300000, guid: cbac22cefce8c0843852e32086a44fb4, type: 3}
   m_BurningClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
-  m_MachineRejectClip: {fileID: 8300000, guid: c089fd5b843c2f74782457c2c77f6fa3, type: 3}
+  m_MachineRejectClip: {fileID: 8300000, guid: 0f9395b135aa7f44eaba4699cd989851, type: 3}
   m_SpawnPoint: {fileID: 5930221585655930911}
   m_BurnParticles: {fileID: 5930221584684436799}
 --- !u!65 &5930221585410324301
