@@ -55,13 +55,13 @@ public class ProgressBarController : MonoBehaviour
         progressBarPos = startAnchor.localPosition;
 
         GlobalEvents.OnRepairGameplayStart += UpdateTimer;
-        GlobalEvents.OnRepairReturnDuration += UpdateTimer;
+        GlobalEvents.OnRepairReturnDuration += UpdateReturnTimer;
     }
 
     private void OnDestroy()
     {
         GlobalEvents.OnRepairGameplayStart -= UpdateTimer;
-        GlobalEvents.OnRepairReturnDuration -= UpdateTimer;
+        GlobalEvents.OnRepairReturnDuration -= UpdateReturnTimer;
     }
 
     private void Update()
@@ -105,7 +105,7 @@ public class ProgressBarController : MonoBehaviour
             state = ProgressState.end;
 
             ResetProgressBar();
-
+            gameTime = m_ReturnTime;
             heroAnim.SetBool("startWalk", false);
             terrainController.scrollingTerrain = false;
             eventController.ResetEvent();
@@ -131,6 +131,12 @@ public class ProgressBarController : MonoBehaviour
 
         progressBarPos = heroProgress.localPosition;
         progressBarPos.y = 0;
+    }
+
+    float m_ReturnTime;
+    void UpdateReturnTimer(float timer)
+    {
+        m_ReturnTime = timer;
     }
 
 }
