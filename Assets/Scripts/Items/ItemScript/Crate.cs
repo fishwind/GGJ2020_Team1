@@ -25,7 +25,7 @@ public class Crate : Entity, IBreakable, IRepairable
     void Break()
     {
         currItemState = ItemStates.Broken;
-        currItemActionState = ItemActionState.RepairHit;
+        currItemActionState = ItemActionState.RepairSweep;
 
         UpdateItemMesh();
 
