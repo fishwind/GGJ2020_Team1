@@ -212,12 +212,18 @@ public class InGameHero : MonoBehaviour
             m_StateDuration = 12.5f;
             m_InGameHeroState = 5;
             StartCoroutine(DelayDestroyObjects(7.1f));
+            StartCoroutine(DelayCollectCoin(8f));
         }
     }
 
     IEnumerator DelayDestroyObjects(float delay) {
         yield return new WaitForSeconds(delay);
         GlobalEvents.SendPlayerDestroyedAll(1);
+    }
+
+    IEnumerator DelayCollectCoin(float delay) {
+        yield return new WaitForSeconds(delay);
+        GlobalEvents.SendCollectCoins();
     }
 
     void Update_DestroyRoom()
