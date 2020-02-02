@@ -17,12 +17,12 @@ public class Entity : MonoBehaviour, IPlaceable
     [SerializeField] private GameObject meshBroken = null;
 
     public ParticleSystem m_BurnParticles = null;
-    public float timer = 1f;
+    public float defaultDuration = 1f;
     private float currTimer = 0f;
 
-    public void StartVisualFeedback()
+    public void StartVisualFeedback(float duration)
     {
-        currTimer = timer;
+        currTimer = duration;
     }
 
     public void StopVisualFeedback()

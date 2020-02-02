@@ -1,27 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &7203865773447439879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7303943003182732953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 264bfc238710bff4d898f1202faed921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemTier: 0
-  itemPlaceHeight: 1
-  currItemState: 2
-  currItemActionState: 1
-  meshUnfired: {fileID: 7731698706509196989}
-  meshFixed: {fileID: 8350828001308601201}
-  meshBroken: {fileID: 4899249349772457149}
-  m_BurnParticles: {fileID: 5651762080944430184}
-  timer: 1
-  repairTime: 1
 --- !u!114 &5090806495913680422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36,6 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TesterPrefab: {fileID: 9154111100962839694, guid: acd3487b379fc1542960e1bdb6725d6b,
     type: 3}
+--- !u!114 &7203865773447439879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7303943003182732953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 264bfc238710bff4d898f1202faed921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemTier: 1
+  itemPlaceHeight: 1
+  currItemState: 2
+  currItemActionState: 1
+  meshUnfired: {fileID: 7731698706509196989}
+  meshFixed: {fileID: 8350828001308601201}
+  meshBroken: {fileID: 4899249349772457149}
+  m_BurnParticles: {fileID: 5651762080944430184}
+  timer: 1
+  repairTime: 1
 --- !u!1001 &1779183137799728082
 PrefabInstance:
   m_ObjectHideFlags: 0
