@@ -69,7 +69,8 @@ public class Crate : Entity, IBreakable, IRepairable
         if (repairCoroutine == null && currItemState == ItemStates.Broken)
         {
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
-            StartVisualFeedback();
+            repairCoroutine = null;
+            StartVisualFeedback(repairTime);
         }
     }
 

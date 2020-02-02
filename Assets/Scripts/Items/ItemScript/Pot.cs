@@ -48,7 +48,7 @@ public class Pot : Entity, IFireable, IBreakable, IRepairable
 
         UpdateItemMesh();
         // TODO: Animations, Play Sounds
-        StartVisualFeedback();
+        StartVisualFeedback(defaultDuration);
     }
 
     void Repair()
@@ -100,7 +100,7 @@ public class Pot : Entity, IFireable, IBreakable, IRepairable
         if (repairCoroutine == null && currItemState == ItemStates.Broken)
         {
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
-            StartVisualFeedback();
+            StartVisualFeedback(repairTime);
         }
     }
 
@@ -111,6 +111,7 @@ public class Pot : Entity, IFireable, IBreakable, IRepairable
         if (repairCoroutine != null)
         {
             StopCoroutine(repairCoroutine);
+            repairCoroutine = null;
             StopVisualFeedback();
         }
     }
