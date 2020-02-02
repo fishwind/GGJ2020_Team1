@@ -29,7 +29,9 @@ public class GameMenuController : MonoBehaviour
 
     private void ShowMenu(bool isShow)
     {
-        menu.DOLocalMoveY(isShow ? 0 : offscreenPosY, 0.3f);
+        Time.timeScale = (!isShow) ? 1 : 0.0001f;
+
+        menu.DOLocalMoveY(isShow ? 0 : offscreenPosY, 0.3f).SetUpdate(true);
         UpdateMenuscreen();
     }
 
@@ -53,7 +55,7 @@ public class GameMenuController : MonoBehaviour
         }
 
         if (currInput > float.Epsilon)
-            currInput -= Time.deltaTime;
+            currInput -= Time.fixedDeltaTime;
 
         if (Input.GetAxisRaw("Horizontal") > float.Epsilon && currInput < float.Epsilon)
         {
