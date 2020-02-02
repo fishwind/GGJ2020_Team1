@@ -14,6 +14,8 @@ public enum ProgressState
 
 public class ProgressBarController : MonoBehaviour
 {
+    public static ProgressBarController Instance;
+
     public int progressionTier = 1;
     public float tweenDuration = 0.3f;
 
@@ -42,6 +44,12 @@ public class ProgressBarController : MonoBehaviour
 
     private void Awake()
     {
+        if (ProgressBarController.Instance != null)
+        {
+            Destroy(this);
+        }
+        Instance = this;
+
         heroImage = heroProgress.GetComponentInChildren<Image>();
         heroAnim = heroImage.transform.GetComponent<Animator>();
         progressBarPos = startAnchor.localPosition;
