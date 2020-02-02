@@ -38950,7 +38950,7 @@ PrefabInstance:
     - target: {fileID: 5126010388244359490, guid: ab33414e78a21dc4592d3a283fdca9b3,
         type: 3}
       propertyPath: m_RepairGameDuration
-      value: 150
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 5126010388244359490, guid: ab33414e78a21dc4592d3a283fdca9b3,
         type: 3}

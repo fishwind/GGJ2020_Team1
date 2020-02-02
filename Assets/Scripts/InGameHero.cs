@@ -208,7 +208,7 @@ public class InGameHero : MonoBehaviour
             if(!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
                 m_Anim.SetTrigger("Skill");
             m_HeroAS.PlayOneShot(m_ChakraClip);
-            GlobalEvents.SendPlayerStartDestroyAll(1); //value from gamestatemanager
+            GlobalEvents.SendPlayerStartDestroyAll(ProgressBarController.Instance.progressionTier); //value from gamestatemanager
             m_StateDuration = 12.5f;
             m_InGameHeroState = 5;
             StartCoroutine(DelayDestroyObjects(7.1f));
