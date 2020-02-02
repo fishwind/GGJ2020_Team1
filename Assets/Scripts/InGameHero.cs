@@ -17,6 +17,14 @@ public class InGameHero : MonoBehaviour
     private int m_InGameHeroState = 0;
 
     private Renderer[] m_Renderers;
+
+    [SerializeField] private AudioClip m_KickingClip    = null;
+    [SerializeField] private AudioClip m_ChakraClip     = null;
+    [SerializeField] private AudioClip m_SlamClip       = null;
+    [SerializeField] private AudioClip m_CollectionClip = null;
+
+    private AudioSource m_HeroAS;
+
     // Start is called before the first frame update
 
     void OnEnable()
@@ -60,7 +68,7 @@ public class InGameHero : MonoBehaviour
         {
             r.enabled = false;
         }
-
+        m_HeroAS = GetComponent<AudioSource>();
         m_InGameHeroState = 0;
     }
 
@@ -158,6 +166,9 @@ public class InGameHero : MonoBehaviour
             if(m_Anim.GetBool("Walking") == true)
                 m_Anim.SetBool("Walking", false);
             m_Anim.SetTrigger("Kick");
+            m_HeroAS.clip = m_KickingClip;
+            m_HeroAS.Play();
+
         }
 
         if (m_StateDuration <= 0)
@@ -196,6 +207,7 @@ public class InGameHero : MonoBehaviour
         {
             if(!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
                 m_Anim.SetTrigger("Skill");
+            m_HeroAS.PlayOneShot(m_ChakraClip);
             GlobalEvents.SendPlayerStartDestroyAll(1); //value from gamestatemanager
             m_StateDuration = 12.5f;
             m_InGameHeroState = 5;
