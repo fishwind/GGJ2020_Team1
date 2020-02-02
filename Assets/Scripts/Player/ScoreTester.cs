@@ -10,7 +10,14 @@ public class ScoreTester : MonoBehaviour
     public Type m_ExpectedType = null;
 
     private void Start() {
-        PrepareExpectedComponents();
+        //PrepareExpectedComponents();
+    }
+
+    public void InitExpectedComponents(Entity e) {
+        if (e is Pot) m_ExpectedType = typeof(Pot);
+        else if (e is Crate) m_ExpectedType = typeof(Crate);
+        else if (e is Table) m_ExpectedType = typeof(Table);
+        // else if (e is CraftMat) m_ExpectedType = typeof(CraftMat);
     }
 
     private void PrepareExpectedComponents() {
