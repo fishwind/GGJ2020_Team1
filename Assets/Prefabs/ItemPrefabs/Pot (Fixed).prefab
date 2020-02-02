@@ -26,7 +26,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 264bfc238710bff4d898f1202faed921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemTier: 1
+  itemTier: 2
   itemPlaceHeight: 1
   currItemState: 2
   currItemActionState: 1
@@ -34,7 +34,7 @@ MonoBehaviour:
   meshFixed: {fileID: 8350828001308601201}
   meshBroken: {fileID: 4899249349772457149}
   m_BurnParticles: {fileID: 5651762080944430184}
-  timer: 1
+  defaultDuration: 1
   repairTime: 1
 --- !u!1001 &1779183137799728082
 PrefabInstance:
