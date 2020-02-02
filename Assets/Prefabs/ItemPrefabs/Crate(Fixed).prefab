@@ -35,7 +35,7 @@ MonoBehaviour:
   meshBroken: {fileID: 8457272253800918775}
   m_BurnParticles: {fileID: 8704599047499220514}
   defaultDuration: 1
-  repairTime: 0
+  repairTime: 1
   m_Coins: {fileID: 1959920301573774886, guid: 663a3c2995c1a9d4a93b81460e1c1410, type: 3}
 --- !u!1001 &4498245607232250379
 PrefabInstance:
