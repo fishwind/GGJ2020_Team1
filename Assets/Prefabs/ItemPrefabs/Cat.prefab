@@ -103,6 +103,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cat_Sleeping
       objectReference: {fileID: 0}
+    - target: {fileID: 433849221345805189, guid: 79e5967455856a748a927fa15cc4ca2e,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433849221345805189, guid: 79e5967455856a748a927fa15cc4ca2e,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433849221345805189, guid: 79e5967455856a748a927fa15cc4ca2e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: 433849221345805189, guid: 79e5967455856a748a927fa15cc4ca2e,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433849221345805189, guid: 79e5967455856a748a927fa15cc4ca2e,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79e5967455856a748a927fa15cc4ca2e, type: 3}
 --- !u!1001 &6256937890633972888
