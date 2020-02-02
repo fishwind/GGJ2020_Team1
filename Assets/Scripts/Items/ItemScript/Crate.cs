@@ -7,6 +7,7 @@ public class Crate : Entity, IBreakable, IRepairable
     [Header("Item Variables")]
     public float repairTime;
     private Coroutine repairCoroutine;
+    public GameObject m_Coins;
 
     #region Init / Destroy
     private void Awake()
@@ -29,6 +30,7 @@ public class Crate : Entity, IBreakable, IRepairable
         UpdateItemMesh();
 
         // TODO: Animations, Play Sounds
+        Instantiate(m_Coins, transform.position, Quaternion.identity);
     }
 
     void Repair()

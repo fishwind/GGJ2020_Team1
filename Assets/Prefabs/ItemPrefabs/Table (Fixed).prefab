@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5665507527514880329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3444750909241611857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72bc7083a6ceb624d8b192ab0672b9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TesterPrefab: {fileID: 9154111100962839694, guid: acd3487b379fc1542960e1bdb6725d6b,
+    type: 3}
 --- !u!114 &8014944326498542265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20,22 +34,9 @@ MonoBehaviour:
   meshFixed: {fileID: 4140776283745725369}
   meshBroken: {fileID: 679839680126317685}
   m_BurnParticles: {fileID: 359707904201448608}
-  timer: 1
+  defaultDuration: 1
   repairTime: 2
---- !u!114 &5665507527514880329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3444750909241611857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72bc7083a6ceb624d8b192ab0672b9f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TesterPrefab: {fileID: 9154111100962839694, guid: acd3487b379fc1542960e1bdb6725d6b,
-    type: 3}
+  m_Coins: {fileID: 1959920301573774886, guid: 663a3c2995c1a9d4a93b81460e1c1410, type: 3}
 --- !u!1001 &1031061075846970199
 PrefabInstance:
   m_ObjectHideFlags: 0
