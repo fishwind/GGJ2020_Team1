@@ -34,6 +34,10 @@ public class GameStateManager : MonoBehaviour
 
     public AnimationCurve m_TextAppearCurve;
 
+    [SerializeField] private AudioClip m_Bgm = null;
+    [SerializeField] private AudioClip m_HeroAnnounce = null;
+    private AudioSource m_BGMsource = null;
+
     void Awake()
     {
         if (GameStateManager.Instance != null)
@@ -43,6 +47,7 @@ public class GameStateManager : MonoBehaviour
         Instance = this;
         m_BText = m_BlackText.GetComponent<Text>();
         m_WText = m_WhiteText.GetComponent<Text>();
+        m_BGMsource = GetComponent<AudioSource>();
     }
 
     void OnEnable()
@@ -87,6 +92,8 @@ public class GameStateManager : MonoBehaviour
     {
         //init the game.... HERO IS COMING UI TEXT
         m_GameState = GameState.ANNOUNCEMENT_HERO;
+        m_BGMsource.clip = m_HeroAnnounce;
+        m_BGMsource.PlayOneShot(m_HeroAnnounce);
         m_CurrStateDuration = m_HeroAnnouncementDuration;
         //play announce hero audio
     }
@@ -149,6 +156,8 @@ public class GameStateManager : MonoBehaviour
             GlobalEvents.SendRepairGameplayStart(m_RepairGameDuration);
             GlobalEvents.SendRepairReturnDuration(m_ReturnGameDuration);
             m_GameState = GameState.REPAIR;
+            m_BGMsource.clip = m_Bgm;
+            m_BGMsource.Play();
         }
     }
 
