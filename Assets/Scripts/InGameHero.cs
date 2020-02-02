@@ -8,6 +8,7 @@ public class InGameHero : MonoBehaviour
     public GameObject m_DoorDestroyPoint;
     public GameObject m_InHousePoint;
     public GameObject m_LeavePoint;
+    public Animator m_Anim;
 
     public float m_AccelMultiplier = 5.0f;
     public float m_MaxSpeed = 7f;
@@ -107,11 +108,12 @@ public class InGameHero : MonoBehaviour
     void Update_WalkToDoor()
     {
         bool reached = MoveTowards(m_DoorDestroyPoint.transform.position);
-
+        if(m_Anim.GetBool("Walking") == false)
+            m_Anim.SetBool("Walking", true);
         if (reached)
         {
             GlobalEvents.SendPlayerStartDestroyDoor();
-            m_StateDuration = 3.0f; //this should be animation time
+            m_StateDuration = 2.5f; //this should be animation time
             m_InGameHeroState = 2;
         }
     }
@@ -148,16 +150,21 @@ public class InGameHero : MonoBehaviour
     {
         m_StateDuration -= Time.deltaTime;
         knockCD -= Time.deltaTime;
-
+        RotateToward(Vector3.back);
         if (m_StateDuration > 0 && knockCD < 0)
         {
             int multiplier = Mathf.CeilToInt(m_StateDuration);
             CameraShake.Instance.Shake(0.1f * multiplier, 0.25f / multiplier);
             knockCD = 1;
+            if(m_Anim.GetBool("Walking") == true)
+                m_Anim.SetBool("Walking", false);
+            m_Anim.SetTrigger("Kick");
         }
 
         if (m_StateDuration <= 0)
         {
+            if(m_Anim.GetBool("Walking") == false)
+                m_Anim.SetBool("Walking", true);
             GlobalEvents.SendPlayerDestroyedDoor();
             CameraShake.Instance.Shake(0.3f);
             m_InGameHeroState = 3;
@@ -167,10 +174,15 @@ public class InGameHero : MonoBehaviour
     void Update_WalkIntoRoom()
     {
         bool reached = MoveTowards(m_InHousePoint.transform.position);
-
+        if(m_Anim.GetBool("Walking") == false)
+            m_Anim.SetBool("Walking", true);
         if (reached)
         {
-            m_StateDuration = 3.0f; //this should be animation time
+            if(m_Anim.GetBool("Walking") == true)
+                m_Anim.SetBool("Walking", false);
+            if(!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Inspect"))
+                m_Anim.SetTrigger("Inspect");
+            m_StateDuration = 2.5f; //this should be animation time
             m_InGameHeroState = 4;
         }
     }
@@ -184,8 +196,10 @@ public class InGameHero : MonoBehaviour
 
         if (m_StateDuration <= 0)
         {
+            if(!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
+                m_Anim.SetTrigger("Skill");
             GlobalEvents.SendPlayerStartDestroyAll(1); //value from gamestatemanager
-            m_StateDuration = 3.0f;
+            m_StateDuration = 12.5f;
             m_InGameHeroState = 5;
         }
     }
@@ -215,9 +229,12 @@ public class InGameHero : MonoBehaviour
     void Update_Leave()
     {
         bool reached = MoveTowards(m_LeavePoint.transform.position);
-
+        if(m_Anim.GetBool("Walking") == false)
+            m_Anim.SetBool("Walking", true);
         if (reached)
         {
+            if(m_Anim.GetBool("Walking") == true)
+                m_Anim.SetBool("Walking", false);
             GlobalEvents.SendPlayerLeaveComplete(1);
             m_StateDuration = 3.0f; //this should be animation time
             m_InGameHeroState = 0;

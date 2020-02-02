@@ -34,7 +34,19 @@ public class Furnace : MonoBehaviour
         }
     }
 
+    private bool crafting = false;
     private void OnTriggerEnter(Collider col) {
+
+        if (crafting)
+        {
+            Entity e = col.gameObject.GetComponentInParent<Entity>();
+            if (e != null)
+            {
+                RejectObject(e.gameObject);
+            }
+            return;
+        }
+
         Pot pot = col.gameObject.GetComponentInParent<Pot>();
         if (!pot) {
             Entity someEntity = col.gameObject.GetComponentInParent<Entity>();
@@ -53,6 +65,7 @@ public class Furnace : MonoBehaviour
     }
 
     private IEnumerator FiringPot(Pot pot) {
+        crafting = true;
         m_BurnTimer = m_Stats.m_FurnaceRepairTime;
         pot.transform.DOScale(Vector3.zero, 0.4f);
         transform.DOShakeRotation(m_Stats.m_FurnaceRepairTime, 5, 20);
@@ -68,6 +81,7 @@ public class Furnace : MonoBehaviour
         ShootOutObject(pot.gameObject, 1.0f);
 
         m_Asource.PlayOneShot(m_PotDoneClip);
+        crafting = false;
     }
 
     private void RejectObject(GameObject rejectObject)

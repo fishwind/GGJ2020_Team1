@@ -11,14 +11,12 @@ public class ScoreTesterSpawner : MonoBehaviour
         Entity currEntity = GetComponent<Entity>();
         if (currEntity is Pot)
         {
-
+            SpawnTesterIfEntityFixed(currEntity);
         } else if (currEntity is Crate) {
-
+            SpawnTesterIfEntityFixed(currEntity);
         } else if (currEntity is Table) {
-
-        } 
-
-        Instantiate(m_TesterPrefab, transform.position, Quaternion.identity);
+            SpawnTesterIfEntityFixed(currEntity);
+        }
     }
 
     void SpawnTesterIfEntityFixed(Entity entity)

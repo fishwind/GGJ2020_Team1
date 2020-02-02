@@ -11,12 +11,12 @@ public class Table : Entity, IBreakable, IRepairable
     #region Init / Destroy
     private void Awake()
     {
-        GlobalEvents.OnPlayerStartDestroyAll += AttemptBreak;
+        GlobalEvents.OnPlayerDestroyedAll += AttemptBreak;
     }
 
     private void OnDestroy()
     {
-        GlobalEvents.OnPlayerStartDestroyAll -= AttemptBreak;
+        GlobalEvents.OnPlayerDestroyedAll -= AttemptBreak;
     }
     #endregion
 
@@ -29,7 +29,7 @@ public class Table : Entity, IBreakable, IRepairable
         UpdateItemMesh();
 
         // TODO: Animations, Play Sounds
-        StartVisualFeedback();
+        StartVisualFeedback(defaultDuration);
     }
 
     void Repair()
@@ -52,7 +52,7 @@ public class Table : Entity, IBreakable, IRepairable
         if (repairCoroutine == null && currItemState == ItemStates.Broken)
         {
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
-            StartVisualFeedback();
+            StartVisualFeedback(repairTime);
         }
     }
 
@@ -63,6 +63,7 @@ public class Table : Entity, IBreakable, IRepairable
         if (repairCoroutine != null)
         {
             StopCoroutine(repairCoroutine);
+            repairCoroutine = null;
             StopVisualFeedback();
         }
     }
