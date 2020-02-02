@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour
         if(state == ItemActionState.RepairSweep)  m_Asource.clip = m_SweepingClip;
         m_Asource.Play();
         float counter = 0;
-        while(counter < 3) {
+        while(counter < repairable.GetRepairTime()) {
             counter += Time.deltaTime;
             m_ProgressSlider.value = counter;
             yield return new WaitForEndOfFrame();

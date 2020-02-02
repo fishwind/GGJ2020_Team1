@@ -118,7 +118,7 @@ public class PotteryWheel : MonoBehaviour
 
     private void Feedback()
     {
-        transform.DOShakeRotation(m_Stats.m_FurnaceRepairTime);
+        transform.DOShakeRotation(m_Stats.m_FurnaceRepairTime, 5, 20);
     }
 
     private void CraftDoneFeedback(CraftMatType type)
