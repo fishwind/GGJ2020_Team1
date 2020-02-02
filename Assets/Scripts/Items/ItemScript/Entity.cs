@@ -20,9 +20,14 @@ public class Entity : MonoBehaviour, IPlaceable
     public float timer = 1f;
     private float currTimer = 0f;
 
-    public void BreakFeedback()
+    public void StartVisualFeedback()
     {
         currTimer = timer;
+    }
+
+    public void StopVisualFeedback()
+    {
+        currTimer = 0;
     }
 
     public void Update()

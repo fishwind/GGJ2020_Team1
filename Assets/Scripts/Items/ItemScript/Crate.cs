@@ -24,7 +24,7 @@ public class Crate : Entity, IBreakable, IRepairable
     void Break()
     {
         currItemState = ItemStates.Broken;
-        currItemActionState = ItemActionState.RepairSweep;
+        currItemActionState = ItemActionState.RepairHit;
 
         UpdateItemMesh();
 
@@ -67,7 +67,10 @@ public class Crate : Entity, IBreakable, IRepairable
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine == null && currItemState == ItemStates.Broken)
+        {
             repairCoroutine = StartCoroutine(RepairingingCoroutine());
+            StartVisualFeedback();
+        }
     }
 
     // Used By Player to stop Repairing Item in the middle of repairing
@@ -75,7 +78,10 @@ public class Crate : Entity, IBreakable, IRepairable
     {
         // Stop Coroutine if currently in Progress
         if (repairCoroutine != null)
+        {
             StopCoroutine(repairCoroutine);
+            StopVisualFeedback();
+        }
     }
 
     // Broken >> Cleared
