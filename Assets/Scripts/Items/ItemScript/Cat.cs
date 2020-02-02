@@ -23,7 +23,7 @@ public class Cat : Entity, IBreakable
 
         UpdateItemMesh();
         // TODO: Animations, Play Sounds
-        BreakFeedback();
+        StartVisualFeedback();
     }
 
     #region IBreakable
