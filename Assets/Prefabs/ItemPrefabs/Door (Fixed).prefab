@@ -12,13 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bdc5c78dc9dfb49818a116d41041b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemTier: 0
   itemPlaceHeight: 0
   currItemState: 2
   currItemActionState: 0
   meshUnfired: {fileID: 2835289671369733371}
   meshFixed: {fileID: 4607290445429616951}
   meshBroken: {fileID: 1146688093911281403}
+  m_BurnParticles: {fileID: 0}
+  timer: 1
   repairTime: 0
+--- !u!114 &2497104055006432704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2974815140247522527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72bc7083a6ceb624d8b192ab0672b9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TesterPrefab: {fileID: 9154111100962839694, guid: acd3487b379fc1542960e1bdb6725d6b,
+    type: 3}
 --- !u!1001 &658814389394207926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -188,7 +205,7 @@ PrefabInstance:
     - target: {fileID: 4018913508256564735, guid: 213c702d288fab241b893771654a02e3,
         type: 3}
       propertyPath: m_Name
-      value: Door
+      value: Door (Fixed)
       objectReference: {fileID: 0}
     - target: {fileID: 5388229808633969338, guid: 213c702d288fab241b893771654a02e3,
         type: 3}
