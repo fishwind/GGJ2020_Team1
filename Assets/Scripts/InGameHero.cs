@@ -112,6 +112,7 @@ public class InGameHero : MonoBehaviour
             m_Anim.SetBool("Walking", true);
         if (reached)
         {
+            GlobalEvents.SendPlayerMoveAllowChange(false);
             GlobalEvents.SendPlayerStartDestroyDoor();
             m_StateDuration = 2.5f; //this should be animation time
             m_InGameHeroState = 2;
@@ -140,8 +141,6 @@ public class InGameHero : MonoBehaviour
             RotateToward(forward);
             //gameObject.transform.rotation = Quaternion.LookRotation(forward);
         }
-
-
         return dist < (Time.deltaTime * 2);
     }
 
@@ -193,7 +192,6 @@ public class InGameHero : MonoBehaviour
 
         //look around
 
-
         if (m_StateDuration <= 0)
         {
             if(!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Skill"))
@@ -201,7 +199,13 @@ public class InGameHero : MonoBehaviour
             GlobalEvents.SendPlayerStartDestroyAll(1); //value from gamestatemanager
             m_StateDuration = 12.5f;
             m_InGameHeroState = 5;
+            StartCoroutine(DelayDestroyObjects(7.1f));
         }
+    }
+
+    IEnumerator DelayDestroyObjects(float delay) {
+        yield return new WaitForSeconds(delay);
+        GlobalEvents.SendPlayerDestroyedAll(1);
     }
 
     void Update_DestroyRoom()
@@ -212,7 +216,7 @@ public class InGameHero : MonoBehaviour
 
         if (m_StateDuration <= 0)
         {
-            GlobalEvents.SendPlayerDestroyedAll(1);
+            // GlobalEvents.SendPlayerDestroyedAll(1);
             m_StateDuration = 3.0f;
             m_InGameHeroState = 6;
         }
@@ -236,9 +240,15 @@ public class InGameHero : MonoBehaviour
             if(m_Anim.GetBool("Walking") == true)
                 m_Anim.SetBool("Walking", false);
             GlobalEvents.SendPlayerLeaveComplete(1);
+            StartCoroutine(DelayEnablePlayerMove(2.8f));
             m_StateDuration = 3.0f; //this should be animation time
             m_InGameHeroState = 0;
         }
+    }
+
+    IEnumerator DelayEnablePlayerMove(float delay) {
+        yield return new WaitForSeconds(delay);
+        GlobalEvents.SendPlayerMoveAllowChange(true);
     }
 
     Camera m_MainCam;

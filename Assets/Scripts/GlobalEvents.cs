@@ -47,10 +47,10 @@ public static class GlobalEvents
         OnPlayerLeaveComplete?.Invoke(whichtier);
     }
 
-    public static GenericBoolEvent OnMenuOpened;
-    public static void SendMenuOpened(bool isMenuOpen)
+    public static GenericBoolEvent OnPlayerMoveAllowChange;
+    public static void SendPlayerMoveAllowChange(bool canMove)
     {
-        OnMenuOpened?.Invoke(isMenuOpen);
+        OnPlayerMoveAllowChange?.Invoke(canMove);
     }
 
     public static GenericFloatEvent OnRepairGameplayStart;
