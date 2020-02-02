@@ -248,7 +248,7 @@ MonoBehaviour:
     type: 3}
   requiredClay: 1
   clayCount: 0
-  requiredWood: 1
+  requiredWood: 2
   woodCount: 0
 --- !u!65 &5501915139824295981
 BoxCollider:

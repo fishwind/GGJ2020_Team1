@@ -104,6 +104,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chair
       objectReference: {fileID: 0}
+    - target: {fileID: 4438347491998865851, guid: 8daf2f1e496a36648b9d25d8c3c59f8d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: 4438347491998865851, guid: 8daf2f1e496a36648b9d25d8c3c59f8d,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438347491998865851, guid: 8daf2f1e496a36648b9d25d8c3c59f8d,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438347491998865851, guid: 8daf2f1e496a36648b9d25d8c3c59f8d,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8daf2f1e496a36648b9d25d8c3c59f8d, type: 3}
 --- !u!1001 &2105620817739634335
@@ -294,6 +314,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6260921509886704785}
     m_Modifications:
+    - target: {fileID: 1014829816335545012, guid: f2bc1157c2b141347a572f2c339f6273,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 128f44a0dffe0bd4384033ed60dfc7ce, type: 2}
+    - target: {fileID: 1014829816335545012, guid: f2bc1157c2b141347a572f2c339f6273,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014829816335545012, guid: f2bc1157c2b141347a572f2c339f6273,
+        type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014829816335545012, guid: f2bc1157c2b141347a572f2c339f6273,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1597001451588388456, guid: f2bc1157c2b141347a572f2c339f6273,
         type: 3}
       propertyPath: m_Name
